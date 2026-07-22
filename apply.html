@@ -204,7 +204,7 @@
     <div class="container">
       <div class="form-header" id="formHeader">
         <h1>Apply for a Free Constraint Audit</h1>
-        <p>15 questions. 3 minutes. We'll diagnose your business's binding constraint and show you where AI can make the biggest impact.</p>
+        <p>22 questions. 4 minutes. We'll diagnose your business's binding constraint and show you where AI can make the biggest impact.</p>
       </div>
 
       <div class="progress-wrap" id="progressWrap">
@@ -270,24 +270,37 @@
 
     // ── Question flow ──
     var questions = [
-      { id: 'company_name', section: 'Business Basics', label: "What's your company called?", hint: '', type: 'text', required: true, placeholder: 'Your business name' },
-      { id: 'contact_name', section: 'Business Basics', label: "And what's your name?", hint: '', type: 'text', required: true, placeholder: 'First and last name' },
-      { id: 'contact_email', section: 'Business Basics', label: "What's the best email to reach you?", hint: "We'll send your audit results here.", type: 'email', required: true, placeholder: 'you@company.com' },
-      { id: 'contact_phone', section: 'Business Basics', label: "Phone number? (optional)", hint: "Only if you prefer a call.", type: 'tel', required: false, placeholder: '(555) 123-4567' },
-      { id: 'industry', section: 'Business Basics', label: "What industry are you in?", hint: '', type: 'select', required: true, options: ['HVAC','Plumbing','Electrical','General Contractor','Mobile Services','Other'] },
-      { id: 'annual_revenue', section: 'Business Basics', label: "What's your annual revenue?", hint: '', type: 'select', required: true, options: ['Under $1M','$1M–$3M','$3M–$5M','$5M–$10M','$10M–$25M','Over $25M'] },
-      { id: 'employee_count', section: 'Business Basics', label: "How many employees do you have?", hint: 'Including yourself.', type: 'number', required: true, placeholder: 'e.g. 12', min: 1 },
-      { id: 'technician_count', section: 'Business Basics', label: "How many field techs or trucks?", hint: '', type: 'number', required: true, placeholder: 'e.g. 5', min: 0 },
-      { id: 'owner_involvement', section: 'Business Basics', label: "How involved are you day-to-day?", hint: '', type: 'select', required: true, options: ['Full-time in field','Full-time in office','Part-time','Removed'] },
-      { id: 'years_in_business', section: 'Business Basics', label: "How long have you been in business?", hint: '', type: 'number', required: true, placeholder: 'e.g. 8', min: 1 },
+      // Section 1: Contact (micro-commitments first)
+      { id: 'contact_name', section: 'About You', label: "What's your name?", hint: '', type: 'text', required: true, placeholder: 'First and last name' },
+      { id: 'contact_email', section: 'About You', label: "What's the best email to reach you?", hint: "We'll send your audit results here.", type: 'email', required: true, placeholder: 'you@company.com' },
+      { id: 'company_name', section: 'About You', label: "What's your company called?", hint: '', type: 'text', required: true, placeholder: 'Your business name' },
+      { id: 'contact_phone', section: 'About You', label: "Phone number? (optional)", hint: "Only if you prefer a call.", type: 'tel', required: false, placeholder: '(555) 123-4567' },
+
+      // Section 2: Business Profile
+      { id: 'industry', section: 'Your Business', label: "What industry are you in?", hint: '', type: 'select', required: true, options: ['HVAC','Plumbing','Electrical','Roofing','General Contractor','Cleaning','Landscaping','Mobile Services','Other'] },
+      { id: 'annual_revenue', section: 'Your Business', label: "What's your annual revenue?", hint: '', type: 'select', required: true, options: ['Under $1M','$1M–$3M','$3M–$5M','$5M–$10M','$10M–$25M','Over $25M'] },
+      { id: 'employee_count', section: 'Your Business', label: "How many employees do you have?", hint: 'Including yourself.', type: 'number', required: true, placeholder: 'e.g. 12', min: 1 },
+      { id: 'technician_count', section: 'Your Business', label: "How many field techs or trucks?", hint: '', type: 'number', required: true, placeholder: 'e.g. 5', min: 0 },
+      { id: 'owner_involvement', section: 'Your Business', label: "How involved are you day-to-day?", hint: '', type: 'select', required: true, options: ['Full-time in field','Full-time in office','Part-time','Removed'] },
+      { id: 'years_in_business', section: 'Your Business', label: "How long have you been in business?", hint: '', type: 'number', required: true, placeholder: 'e.g. 8', min: 1 },
+
+      // Section 3: Operations
       { id: 'scheduling_method', section: 'Operations', label: "How do you schedule jobs right now?", hint: '', type: 'select', required: true, options: ['Paper / whiteboard','Google Calendar','Spreadsheet','Field service app (ServiceTitan, etc.)','Other'] },
       { id: 'crm_system', section: 'Operations', label: "What CRM do you use?", hint: '', type: 'select', required: true, options: ['None','Basic (Google Contacts)','Full CRM (HubSpot, Salesforce)','Industry-specific (ServiceTitan, Jobber)'] },
       { id: 'invoicing_method', section: 'Operations', label: "How do you send invoices?", hint: '', type: 'select', required: true, options: ['Paper','Email','Accounting software (QuickBooks)','Industry-specific'] },
       { id: 'documented_processes', section: 'Operations', label: "How much of your operations are documented?", hint: '', type: 'select', required: true, options: ['None','Some','Most','All documented'] },
-      { id: 'primary_challenge', section: 'Pain Points', label: "What's your biggest challenge right now?", hint: '', type: 'select', required: true, options: ['Not enough leads','Leads don\'t close','Can\'t keep up with operations','Cash flow problems','Customers don\'t come back','Customer complaints / support'] },
+
+      // Section 4: Pain Points (multi-select + open-ended)
+      { id: 'primary_challenge', section: 'Pain Points', label: "What's your biggest challenge right now?", hint: 'Pick the one that hurts most.', type: 'select', required: true, options: ['Not enough leads','Leads don\'t close','Can\'t keep up with operations','Cash flow problems','Customers don\'t come back','Customer complaints / support'] },
+      { id: 'leaking_workflows', section: 'Pain Points', label: "Where are things falling through the cracks?", hint: 'Select all that apply.', type: 'multi', required: true, options: ['Lead response — inquiries sit unanswered','Scheduling — jobs get double-booked or missed','Follow-up — quotes go out, nobody follows up','CRM & admin — data entry is a time sink','Reviews & referrals — no system to ask or track','Reporting — no idea what\'s actually happening','Invoicing — slow to send, slower to collect','Other'] },
+      { id: 'biggest_bottleneck', section: 'Pain Points', label: "If you could wave a magic wand and fix one thing, what would it be?", hint: 'Be specific — this helps us focus the audit.', type: 'textarea', required: false, placeholder: 'e.g. Every morning I spend 2 hours figuring out who\'s going where...' },
       { id: 'owner_admin_hours', section: 'Pain Points', label: "How many hours a week do you spend on admin?", hint: 'Scheduling, invoicing, follow-ups — the stuff that keeps you from growing.', type: 'select', required: true, options: ['0–5','5–10','10–20','20–30','30+'] },
       { id: 'review_count', section: 'Pain Points', label: "How many online reviews do you have?", hint: '', type: 'select', required: true, options: ['0','1–5','5–10','10–25','25–50','50+'] },
-      { id: 'marketing_spend', section: 'Pain Points', label: "What do you spend on marketing each month?", hint: '', type: 'select', required: true, options: ['$0','$0–500','$500–2K','$2K–5K','$5K–20K','$20K+'] }
+      { id: 'marketing_spend', section: 'Pain Points', label: "What do you spend on marketing each month?", hint: '', type: 'select', required: true, options: ['$0','$0–500','$500–2K','$2K–5K','$5K–20K','$20K+'] },
+
+      // Section 5: Qualification gates
+      { id: 'urgency', section: 'Readiness', label: "Do you need this solved in the next 30–90 days?", hint: '', type: 'select', required: true, options: ['Yes — this is urgent','Maybe — within 6 months','No — just exploring'] },
+      { id: 'budget', section: 'Readiness', label: "Are you prepared to invest $7,500+ in setup if we find the right solution?", hint: 'Honest answer — we won\'t sell you anything that doesn\'t make sense.', type: 'select', required: true, options: ['Yes — ready to invest','Maybe — need to see the ROI first','No — not right now'] }
     ];
 
     var answers = {};
@@ -313,6 +326,10 @@
         var val = answers[q.id] || '';
         html += '<input type="' + q.type + '" class="question-input" id="qInput" placeholder="' + (q.placeholder || '') + '" value="' + val.replace(/"/g,'&quot;') + '"' + (q.min !== undefined ? ' min="' + q.min + '"' : '') + '>';
         html += '<div class="question-error" id="qError">This field is required</div>';
+      } else if (q.type === 'textarea') {
+        var val = answers[q.id] || '';
+        html += '<textarea class="question-input" id="qInput" placeholder="' + (q.placeholder || '') + '" rows="3" style="resize:vertical;min-height:80px;">' + val.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</textarea>';
+        html += '<div class="question-error" id="qError">This field is required</div>';
       } else if (q.type === 'select') {
         html += '<div class="option-group" id="qOptions">';
         q.options.forEach(function(opt) {
@@ -321,6 +338,15 @@
         });
         html += '</div>';
         html += '<div class="question-error" id="qError">Please select an option</div>';
+      } else if (q.type === 'multi') {
+        var selected = answers[q.id] ? answers[q.id].split('||') : [];
+        html += '<div class="option-group" id="qOptions">';
+        q.options.forEach(function(opt) {
+          var checked = selected.indexOf(opt) !== -1 ? ' selected' : '';
+          html += '<button type="button" class="option-btn' + checked + '" data-value="' + opt.replace(/"/g,'&quot;') + '" onclick="toggleMulti(this,\'' + q.id + '\',\'' + opt.replace(/'/g,"\\'") + '\')">' + opt + '</button>';
+        });
+        html += '</div>';
+        html += '<div class="question-error" id="qError">Select at least one</div>';
       }
 
       html += '<div class="btn-row">';
@@ -363,6 +389,16 @@
       document.getElementById('qError').classList.remove('visible');
     }
 
+    function toggleMulti(btn, fieldId, value) {
+      btn.classList.toggle('selected');
+      var selected = answers[fieldId] ? answers[fieldId].split('||') : [];
+      var idx = selected.indexOf(value);
+      if (idx === -1) { selected.push(value); }
+      else { selected.splice(idx, 1); }
+      answers[fieldId] = selected.join('||');
+      document.getElementById('qError').classList.remove('visible');
+    }
+
     function goNext() {
       var q = questions[currentIdx];
       var err = document.getElementById('qError');
@@ -372,6 +408,21 @@
           if (err) err.classList.add('visible');
           return;
         }
+      } else if (q.type === 'multi') {
+        var selected = answers[q.id] ? answers[q.id].split('||').filter(Boolean) : [];
+        if (q.required && selected.length === 0) {
+          if (err) err.classList.add('visible');
+          return;
+        }
+      } else if (q.type === 'textarea') {
+        var inp = document.getElementById('qInput');
+        var val = inp ? inp.value.trim() : '';
+        if (q.required && !val) {
+          if (inp) inp.classList.add('error');
+          if (err) err.classList.add('visible');
+          return;
+        }
+        answers[q.id] = val;
       } else {
         var inp = document.getElementById('qInput');
         var val = inp ? inp.value.trim() : '';
@@ -433,6 +484,21 @@
           document.getElementById('qError').classList.add('visible');
           return;
         }
+      } else if (q.type === 'multi') {
+        var selected = answers[q.id] ? answers[q.id].split('||').filter(Boolean) : [];
+        if (q.required && selected.length === 0) {
+          document.getElementById('qError').classList.add('visible');
+          return;
+        }
+      } else if (q.type === 'textarea') {
+        var inp = document.getElementById('qInput');
+        var val = inp ? inp.value.trim() : '';
+        if (q.required && !val) {
+          if (inp) inp.classList.add('error');
+          document.getElementById('qError').classList.add('visible');
+          return;
+        }
+        answers[q.id] = val;
       } else {
         var inp = document.getElementById('qInput');
         var val = inp ? inp.value.trim() : '';
@@ -464,9 +530,13 @@
         invoicing_method: answers.invoicing_method || '',
         documented_processes: answers.documented_processes || '',
         primary_challenge: answers.primary_challenge || '',
+        leaking_workflows: answers.leaking_workflows || '',
+        biggest_bottleneck: answers.biggest_bottleneck || '',
         owner_admin_hours: answers.owner_admin_hours || '',
         review_count: answers.review_count || '',
         marketing_spend: answers.marketing_spend || '',
+        urgency: answers.urgency || '',
+        budget: answers.budget || '',
         qualified: true
       };
 
