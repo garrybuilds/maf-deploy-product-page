@@ -185,6 +185,25 @@
           <div class="form-group">
             <label for="company_name">Company name</label>
             <input type="text" id="company_name" name="company_name" required placeholder="Your business name">
+            <span class="error-msg"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="contact_name">Your name</label>
+            <input type="text" id="contact_name" name="contact_name" required placeholder="First and last name">
+            <span class="error-msg"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="contact_email">Email address</label>
+            <input type="email" id="contact_email" name="contact_email" required placeholder="you@company.com">
+            <span class="error-msg"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="contact_phone">Phone number</label>
+            <input type="tel" id="contact_phone" name="contact_phone" placeholder="(555) 123-4567">
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
@@ -198,6 +217,7 @@
               <option value="Mobile Services">Mobile Services</option>
               <option value="Other">Other</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
@@ -211,16 +231,19 @@
               <option value="$10M–$25M">$10M–$25M</option>
               <option value="Over $25M">Over $25M</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
             <label for="employee_count">Number of employees (including owner)</label>
             <input type="number" id="employee_count" name="employee_count" required min="1" placeholder="e.g. 12">
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
             <label for="technician_count">Number of field technicians / trucks</label>
             <input type="number" id="technician_count" name="technician_count" required min="0" placeholder="e.g. 5">
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
@@ -232,11 +255,13 @@
               <option value="Part-time">Part-time</option>
               <option value="Removed">Removed</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
             <label for="years_in_business">Years in business</label>
-            <input type="number" id="years_in_business" name="years_in_business" required min="0" placeholder="e.g. 8">
+            <input type="number" id="years_in_business" name="years_in_business" required min="1" placeholder="e.g. 8">
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-actions">
@@ -259,6 +284,7 @@
               <option value="Field service app">Field service app (ServiceTitan, Housecall Pro, etc.)</option>
               <option value="Other">Other</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
@@ -270,6 +296,7 @@
               <option value="Full CRM">Full CRM (HubSpot, Salesforce)</option>
               <option value="Industry-specific">Industry-specific (ServiceTitan, Housecall Pro, Jobber)</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
@@ -281,6 +308,7 @@
               <option value="Accounting software">Accounting software (QuickBooks, etc.)</option>
               <option value="Industry-specific">Industry-specific</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
@@ -292,6 +320,7 @@
               <option value="Most">Most</option>
               <option value="All documented">All documented</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-actions">
@@ -315,6 +344,7 @@
               <option value="Customers don't come back">Customers don't come back</option>
               <option value="Customer complaints/support">Customer complaints / support</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
@@ -327,6 +357,7 @@
               <option value="20–30">20–30</option>
               <option value="30+">30+</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
@@ -340,6 +371,7 @@
               <option value="25–50">25–50</option>
               <option value="50+">50+</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-group">
@@ -353,6 +385,7 @@
               <option value="$5K–20K">$5K–20K</option>
               <option value="$20K+">$20K+</option>
             </select>
+            <span class="error-msg"></span>
           </div>
 
           <div class="form-actions">
@@ -454,6 +487,7 @@
     }
 
     function prevStep(current) {
+      if (current <= 1) return;
       document.getElementById('step' + current).classList.remove('active');
       document.getElementById('step' + (current - 1)).classList.add('active');
       updateProgress(current - 1);
@@ -493,12 +527,34 @@
     // Form submission
     document.getElementById('intakeForm').addEventListener('submit', function(e) {
       e.preventDefault();
+
+      // Validate step 3 fields before submitting
+      var step3 = document.getElementById('step3');
+      var fields = step3.querySelectorAll('[required]');
+      var valid = true;
+      fields.forEach(function(f) {
+        var group = f.closest('.form-group');
+        var msg = group ? group.querySelector('.error-msg') : null;
+        if (!f.value) {
+          if (group) group.classList.add('error');
+          if (msg) { msg.textContent = 'This field is required'; msg.classList.add('visible'); }
+          valid = false;
+        } else {
+          if (group) group.classList.remove('error');
+          if (msg) msg.classList.remove('visible');
+        }
+      });
+      if (!valid) return;
+
       var btn = document.getElementById('submitBtn');
       btn.disabled = true;
       btn.textContent = 'Submitting...';
 
       var data = {
         company_name: document.getElementById('company_name').value,
+        contact_name: document.getElementById('contact_name').value,
+        contact_email: document.getElementById('contact_email').value,
+        contact_phone: document.getElementById('contact_phone').value,
         industry: document.getElementById('industry').value,
         annual_revenue: document.getElementById('annual_revenue').value,
         employee_count: parseInt(document.getElementById('employee_count').value) || 0,
