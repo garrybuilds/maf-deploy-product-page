@@ -177,14 +177,62 @@
     .constraint-card h3 { margin-bottom: 8px; }
     .constraint-card p { font-size: 0.95rem; line-height: 1.5; }
 
+    /* Steps */
+    .steps {
+      display: flex; align-items: flex-start; gap: 24px; justify-content: center;
+    }
+    .step {
+      flex: 1; max-width: 340px; text-align: center;
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 32px 24px;
+    }
+    .step-number {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--purple); color: #fff; font-weight: 600; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .step h3 { margin-bottom: 8px; }
+    .step p { font-size: 0.95rem; line-height: 1.5; }
+    .step-arrow {
+      font-size: 1.5rem; color: var(--purple); padding-top: 40px;
+      flex-shrink: 0;
+    }
+
+    /* Integration cards */
+    .bg-alt { background: var(--bg-alt); }
+    .integration-levels {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .integration-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 32px 24px; text-align: center;
+    }
+    .integration-badge {
+      display: inline-block; padding: 4px 12px; border-radius: 20px;
+      font-size: 0.8rem; font-weight: 600; text-transform: uppercase; margin-bottom: 16px;
+    }
+    .integration-badge.api { background: #e0e7ff; color: #4338ca; }
+    .integration-badge.webhook { background: #fce7f3; color: #be185d; }
+    .integration-badge.export { background: #d1fae5; color: #065f46; }
+    [data-theme="dark"] .integration-badge.api { background: #312e81; color: #a5b4fc; }
+    [data-theme="dark"] .integration-badge.webhook { background: #831843; color: #f9a8d4; }
+    [data-theme="dark"] .integration-badge.export { background: #064e3b; color: #6ee7b7; }
+    .integration-card h3 { margin-bottom: 8px; }
+    .integration-card p { font-size: 0.95rem; line-height: 1.5; }
+
     /* Responsive */
     @media (max-width: 1024px) {
       .constraint-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps { flex-direction: column; align-items: center; }
+      .step { max-width: 100%; }
+      .step-arrow { transform: rotate(90deg); padding-top: 0; }
     }
     @media (max-width: 768px) {
       section { padding: 48px 0; }
       .container { padding: 0 16px; }
       .constraint-grid { grid-template-columns: 1fr; }
+      .integration-levels { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -257,6 +305,62 @@
             <div class="constraint-icon">🎧</div>
             <h3>Support</h3>
             <p>Customer issues pile up with no system. Everything comes to you, and things get missed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solution -->
+    <section id="solution">
+      <div class="container">
+        <div class="section-header">
+          <h2>MAF Deploy finds your constraint and deploys AI against it.</h2>
+          <p>We don't replace your existing tools — we build on top of ServiceTitan, QuickBooks, HubSpot, whatever you already use. AI handles the repetitive work between your tools. Your team handles the complex work. You focus on growth.</p>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Audit</h3>
+            <p>We diagnose your constraint using 20 operational questions mapped against industry benchmarks. You get a scorecard showing where you stand vs. your industry — close rates, response times, cash flow, retention, and more. Then we recommend a deployment plan.</p>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Deploy</h3>
+            <p>We deploy AI agents on top of your existing systems. Each agent handles a specific business function — marketing, sales, operations, customer success, finance, support. Agents work 24/7. They don't sleep, they don't take breaks, they don't need training.</p>
+          </div>
+          <div class="step-arrow">→</div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Review</h3>
+            <p>Every month, we re-diagnose. Has your constraint shifted? Do we need to deploy different agents? You get a monthly scorecard: revenue impact, cost savings, risk mitigation. The scorecard is yours to share with your team, your board, your stakeholders.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stack -->
+    <section id="stack" class="bg-alt">
+      <div class="container">
+        <div class="section-header">
+          <h2>We connect, we don't replace.</h2>
+          <p>Your field techs keep using ServiceTitan or Housecall Pro on their phones. Your office team keeps using QuickBooks. Your sales team keeps using your CRM. MAF Deploy's agents sit on top of these tools, automating the work between them.</p>
+        </div>
+        <div class="integration-levels">
+          <div class="integration-card">
+            <span class="integration-badge api">API</span>
+            <h3>Real-time</h3>
+            <p>Direct integration with your software's API. Data flows instantly between your tools and our agents.</p>
+          </div>
+          <div class="integration-card">
+            <span class="integration-badge webhook">Webhook</span>
+            <h3>Event-driven</h3>
+            <p>Your tools send events to our agents when things happen — a new lead, a completed job, an overdue invoice.</p>
+          </div>
+          <div class="integration-card">
+            <span class="integration-badge export">Export</span>
+            <h3>Scheduled sync</h3>
+            <p>For tools without APIs, we work with scheduled exports and imports. Not real-time, but reliable.</p>
           </div>
         </div>
       </div>
