@@ -259,6 +259,15 @@
     .faq-item.open .faq-answer { max-height: 300px; }
     .faq-answer p { padding: 0 0 20px; font-size: 0.95rem; line-height: 1.6; }
 
+    /* CTA section */
+    .cta-section {
+      text-align: center; padding: 100px 0;
+      background: linear-gradient(135deg, var(--brand-dark) 0%, #2d1b69 50%, var(--brand-dark) 100%);
+    }
+    [data-theme="dark"] .cta-section { background: linear-gradient(135deg, #0a0a14 0%, #1a1035 50%, #0a0a14 100%); }
+    .cta-section h2 { color: #fff; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .cta-sub { color: rgba(255,255,255,0.5); margin-top: 24px; font-size: 0.9rem; }
+
     /* Responsive */
     @media (max-width: 1024px) {
       .constraint-grid { grid-template-columns: repeat(2, 1fr); }
@@ -526,6 +535,15 @@
             <div class="faq-answer"><p>The audit is free. If we can't show you measurable impact in 60 days, you don't pay. We're betting our value demonstration works — and we publish our own scorecard every month to prove it.</p></div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section id="cta" class="cta-section">
+      <div class="container">
+        <h2>Find your constraint. Deploy against it. See results in 60 days.</h2>
+        <a href="https://cal.com/malwa-asset-firm/maf-deploy-audit" class="btn btn-primary btn-lg">Get Your Free Audit →</a>
+        <p class="cta-sub">No obligation. No catch. We lose money on every audit that doesn't convert — we're betting our value demonstration works.</p>
       </div>
     </section>
   </main>
