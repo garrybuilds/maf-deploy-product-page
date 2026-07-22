@@ -163,10 +163,28 @@
     footer a { color: var(--footer-text); }
     footer a:hover { color: var(--purple); }
 
+    /* Constraint grid */
+    .constraint-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+    .constraint-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 32px 24px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .constraint-card:hover { transform: translateY(-2px); box-shadow: 0 4px 20px var(--shadow-ambient); }
+    .constraint-icon { font-size: 2rem; margin-bottom: 12px; }
+    .constraint-card h3 { margin-bottom: 8px; }
+    .constraint-card p { font-size: 0.95rem; line-height: 1.5; }
+
     /* Responsive */
+    @media (max-width: 1024px) {
+      .constraint-grid { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 768px) {
       section { padding: 48px 0; }
       .container { padding: 0 16px; }
+      .constraint-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -198,6 +216,48 @@
           <span>Free 24+ metric audit</span>
           <span class="badge-divider">|</span>
           <span>12-month minimum</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section id="problem">
+      <div class="container">
+        <div class="section-header">
+          <h2>Every service business has a constraint — the one thing limiting growth.</h2>
+          <p>Most owners try to fix it by working harder. Or hiring more people. Or buying another software tool. None of those solve the constraint — they just add more moving parts.</p>
+        </div>
+        <div class="constraint-grid">
+          <div class="constraint-card">
+            <div class="constraint-icon">📢</div>
+            <h3>Demand</h3>
+            <p>The phone isn't ringing like it used to. You don't know where your next jobs are coming from.</p>
+          </div>
+          <div class="constraint-card">
+            <div class="constraint-icon">🎯</div>
+            <h3>Conversion</h3>
+            <p>Leads come in but don't close. People ask for quotes and go with someone else.</p>
+          </div>
+          <div class="constraint-card">
+            <div class="constraint-icon">🚛</div>
+            <h3>Delivery</h3>
+            <p>You're drowning in scheduling. Things fall through the cracks. Your office staff is overwhelmed.</p>
+          </div>
+          <div class="constraint-card">
+            <div class="constraint-icon">💰</div>
+            <h3>Cash Flow</h3>
+            <p>You do the work but don't collect efficiently. Invoices go out late, payments are slow.</p>
+          </div>
+          <div class="constraint-card">
+            <div class="constraint-icon">🔁</div>
+            <h3>Retention</h3>
+            <p>You do a job and never hear from them again. No reviews, no referrals, no repeat business.</p>
+          </div>
+          <div class="constraint-card">
+            <div class="constraint-icon">🎧</div>
+            <h3>Support</h3>
+            <p>Customer issues pile up with no system. Everything comes to you, and things get missed.</p>
+          </div>
         </div>
       </div>
     </section>
