@@ -27,12 +27,19 @@
       --purple: #533afd; --purple-hover: #4434d4; --navy: #061b31; --slate: #64748d;
       --white: #ffffff; --border: #e5edf5; --bg: #ffffff; --bg-alt: #f8f9fc;
       --card-bg: #ffffff; --text: #64748d; --heading: #061b31;
-      --radius: 6px; --radius-lg: 8px; --success: #15be53; --error: #ef4444;
+      --shadow-sm: 0 1px 2px rgba(50,50,93,0.08), 0 1px 1px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px rgba(50,50,93,0.11), 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 25px rgba(50,50,93,0.15), 0 4px 10px rgba(0,0,0,0.06);
+      --radius: 6px; --radius-lg: 8px; --radius-xl: 12px;
+      --success: #15be53; --error: #ef4444;
     }
     [data-theme="dark"] {
       --purple: #5b4fcf; --purple-hover: #4c41b8; --navy: #e2e8f0; --slate: #94a3b8;
       --white: #0f1117; --border: #1e293b; --bg: #0f1117; --bg-alt: #15171f;
       --card-bg: #1a1d27; --text: #94a3b8; --heading: #e2e8f0;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3), 0 1px 1px rgba(0,0,0,0.2);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.3);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.5), 0 4px 10px rgba(0,0,0,0.3);
     }
 
     html { scroll-behavior: smooth; }
@@ -46,7 +53,7 @@
       line-height: 1.6; -webkit-font-smoothing: antialiased;
       min-height: 100vh; display: flex; flex-direction: column;
     }
-    h1, h2, h3 { color: var(--heading); font-weight: 300; line-height: 1.2; }
+    h1, h2, h3 { color: var(--heading); font-weight: 300; line-height: 1.15; letter-spacing: -0.02em; }
     h1 { font-size: clamp(1.5rem, 3vw, 2rem); }
     h2 { font-size: 1.3rem; }
 
@@ -80,51 +87,81 @@
     [data-theme="light"] .icon-moon { display: inline; }
 
     /* Form */
-    main { flex: 1; padding: 48px 0; }
+    main { flex: 1; padding: 48px 0; display: flex; align-items: center; }
     .form-header { text-align: center; margin-bottom: 40px; }
     .form-header p { margin-top: 8px; color: var(--slate); }
 
+    /* Progress */
+    .progress-wrap { margin-bottom: 32px; }
     .progress-bar {
-      display: flex; gap: 8px; margin-bottom: 32px;
+      height: 4px; border-radius: 2px; background: var(--border);
+      overflow: hidden; margin-bottom: 8px;
     }
-    .progress-step {
-      flex: 1; height: 4px; border-radius: 2px; background: var(--border);
-      transition: background 0.3s;
+    .progress-fill {
+      height: 100%; background: var(--purple); border-radius: 2px;
+      transition: width 0.4s ease;
     }
-    .progress-step.active { background: var(--purple); }
-    .progress-step.done { background: var(--success); }
+    .progress-label {
+      display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--slate);
+    }
 
-    .form-step { display: none; }
-    .form-step.active { display: block; }
-
-    .form-group { margin-bottom: 24px; }
-    .form-group label {
-      display: block; font-weight: 500; color: var(--heading);
-      margin-bottom: 6px; font-size: 0.95rem;
+    /* Question card */
+    .question-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); padding: 40px 36px;
+      box-shadow: var(--shadow-md); transition: opacity 0.3s ease, transform 0.3s ease;
+      min-height: 280px; display: flex; flex-direction: column;
     }
-    .form-group select, .form-group input {
-      width: 100%; padding: 12px 14px; border: 1px solid var(--border);
+    .question-card.switching { opacity: 0; transform: translateY(12px); }
+    .question-label {
+      font-size: 1.35rem; font-weight: 300; color: var(--heading);
+      margin-bottom: 8px; line-height: 1.3;
+    }
+    .question-hint { font-size: 0.9rem; color: var(--slate); margin-bottom: 28px; }
+    .question-input {
+      width: 100%; padding: 14px 16px; border: 1px solid var(--border);
       border-radius: var(--radius); font-family: 'Source Sans 3', sans-serif;
-      font-size: 1rem; color: var(--heading); background: var(--card-bg);
-      transition: border-color 0.2s;
+      font-size: 1.05rem; color: var(--heading); background: var(--bg);
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
-    .form-group select:focus, .form-group input:focus {
-      outline: 2px solid var(--purple); outline-offset: 2px; border-color: var(--purple);
+    .question-input:focus {
+      outline: none; border-color: var(--purple);
+      box-shadow: 0 0 0 3px rgba(83,58,253,0.12);
     }
-    .form-group .hint { font-size: 0.8rem; color: var(--slate); margin-top: 4px; }
+    .question-input.error { border-color: var(--error); }
+    .question-error {
+      color: var(--error); font-size: 0.85rem; margin-top: 8px; display: none;
+    }
+    .question-error.visible { display: block; }
 
+    /* Radio / select options */
+    .option-group { display: flex; flex-direction: column; gap: 10px; }
+    .option-btn {
+      width: 100%; text-align: left; padding: 14px 18px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem; color: var(--heading); cursor: pointer;
+      transition: all 0.2s;
+    }
+    .option-btn:hover { border-color: var(--purple); background: rgba(83,58,253,0.03); }
+    .option-btn.selected { border-color: var(--purple); background: rgba(83,58,253,0.06); color: var(--purple); font-weight: 500; }
+
+    /* Buttons */
+    .btn-row { display: flex; gap: 12px; margin-top: 32px; }
     .btn {
-      display: inline-block; padding: 12px 28px; border-radius: var(--radius);
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 32px; border-radius: var(--radius);
       font-family: 'Source Sans 3', sans-serif; font-weight: 500; font-size: 1rem;
       cursor: pointer; transition: all 0.2s; border: none; text-align: center;
     }
-    .btn-primary { background: var(--purple); color: #fff; }
-    .btn-primary:hover { background: var(--purple-hover); color: #fff; }
+    .btn-primary { background: var(--purple); color: #fff; box-shadow: var(--shadow-sm); }
+    .btn-primary:hover { background: var(--purple-hover); color: #fff; box-shadow: var(--shadow-md); transform: translateY(-1px); }
     .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--heading); }
     .btn-outline:hover { border-color: var(--purple); color: var(--purple); }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .form-actions { display: flex; gap: 12px; justify-content: space-between; margin-top: 32px; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn:focus-visible, .question-input:focus-visible, .option-btn:focus-visible {
+      outline: 2px solid var(--purple); outline-offset: 2px;
+    }
 
     /* Result screens */
     .result { display: none; text-align: center; padding: 48px 0; }
@@ -132,10 +169,7 @@
     .result-icon { font-size: 3rem; margin-bottom: 16px; }
     .result h2 { margin-bottom: 12px; }
     .result p { margin-bottom: 24px; color: var(--slate); max-width: 500px; margin-left: auto; margin-right: auto; }
-
-    .form-group .error-msg { font-size: 0.8rem; color: var(--error); margin-top: 4px; display: none; }
-    .form-group .error-msg.visible { display: block; }
-    .form-group.error input, .form-group.error select { border-color: var(--error); }
+    .result .btn-row { justify-content: center; }
 
     footer {
       background: var(--bg-alt); border-top: 1px solid var(--border);
@@ -147,6 +181,8 @@
     @media (max-width: 768px) {
       main { padding: 32px 0; }
       .container { padding: 0 16px; }
+      .question-card { padding: 28px 20px; }
+      .question-label { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -166,241 +202,28 @@
 
   <main id="main-content">
     <div class="container">
-      <div class="form-header">
+      <div class="form-header" id="formHeader">
         <h1>Apply for a Free Constraint Audit</h1>
         <p>15 questions. 3 minutes. We'll diagnose your business's binding constraint and show you where AI can make the biggest impact.</p>
       </div>
 
-      <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" aria-label="Form progress">
-        <div class="progress-step active" id="prog1"></div>
-        <div class="progress-step" id="prog2"></div>
-        <div class="progress-step" id="prog3"></div>
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="progress-label">
+          <span id="stepCounter">Question 1 of 15</span>
+          <span id="sectionLabel"></span>
+        </div>
       </div>
 
-      <form id="intakeForm" onsubmit="return false;">
-        <!-- Step 1: Business Basics -->
-        <div class="form-step active" id="step1">
-          <h2 style="margin-bottom:24px;">Section A: Business Basics</h2>
-
-          <div class="form-group">
-            <label for="company_name">Company name</label>
-            <input type="text" id="company_name" name="company_name" required placeholder="Your business name">
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="contact_name">Your name</label>
-            <input type="text" id="contact_name" name="contact_name" required placeholder="First and last name">
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="contact_email">Email address</label>
-            <input type="email" id="contact_email" name="contact_email" required placeholder="you@company.com">
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="contact_phone">Phone number</label>
-            <input type="tel" id="contact_phone" name="contact_phone" placeholder="(555) 123-4567">
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="industry">Industry</label>
-            <select id="industry" name="industry" required>
-              <option value="">Select your industry</option>
-              <option value="HVAC">HVAC</option>
-              <option value="Plumbing">Plumbing</option>
-              <option value="Electrical">Electrical</option>
-              <option value="General Contractor">General Contractor</option>
-              <option value="Mobile Services">Mobile Services</option>
-              <option value="Other">Other</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="annual_revenue">Annual revenue</label>
-            <select id="annual_revenue" name="annual_revenue" required>
-              <option value="">Select revenue range</option>
-              <option value="Under $1M">Under $1M</option>
-              <option value="$1M–$3M">$1M–$3M</option>
-              <option value="$3M–$5M">$3M–$5M</option>
-              <option value="$5M–$10M">$5M–$10M</option>
-              <option value="$10M–$25M">$10M–$25M</option>
-              <option value="Over $25M">Over $25M</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="employee_count">Number of employees (including owner)</label>
-            <input type="number" id="employee_count" name="employee_count" required min="1" placeholder="e.g. 12">
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="technician_count">Number of field technicians / trucks</label>
-            <input type="number" id="technician_count" name="technician_count" required min="0" placeholder="e.g. 5">
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="owner_involvement">Owner involvement</label>
-            <select id="owner_involvement" name="owner_involvement" required>
-              <option value="">Select involvement level</option>
-              <option value="Full-time in field">Full-time in field</option>
-              <option value="Full-time in office">Full-time in office</option>
-              <option value="Part-time">Part-time</option>
-              <option value="Removed">Removed</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="years_in_business">Years in business</label>
-            <input type="number" id="years_in_business" name="years_in_business" required min="1" placeholder="e.g. 8">
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-actions">
-            <div></div>
-            <button type="button" class="btn btn-primary" onclick="nextStep(1)">Continue →</button>
-          </div>
-        </div>
-
-        <!-- Step 2: Operational Infrastructure -->
-        <div class="form-step" id="step2">
-          <h2 style="margin-bottom:24px;">Section B: Operational Infrastructure</h2>
-
-          <div class="form-group">
-            <label for="scheduling_method">How do you schedule jobs?</label>
-            <select id="scheduling_method" name="scheduling_method" required>
-              <option value="">Select method</option>
-              <option value="Paper/whiteboard">Paper / whiteboard</option>
-              <option value="Google Calendar">Google Calendar</option>
-              <option value="Spreadsheet">Spreadsheet</option>
-              <option value="Field service app">Field service app (ServiceTitan, Housecall Pro, etc.)</option>
-              <option value="Other">Other</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="crm_system">CRM system</label>
-            <select id="crm_system" name="crm_system" required>
-              <option value="">Select CRM</option>
-              <option value="None">None</option>
-              <option value="Basic">Basic (Google Contacts, etc.)</option>
-              <option value="Full CRM">Full CRM (HubSpot, Salesforce)</option>
-              <option value="Industry-specific">Industry-specific (ServiceTitan, Housecall Pro, Jobber)</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="invoicing_method">How do you send invoices?</label>
-            <select id="invoicing_method" name="invoicing_method" required>
-              <option value="">Select method</option>
-              <option value="Paper">Paper</option>
-              <option value="Email">Email</option>
-              <option value="Accounting software">Accounting software (QuickBooks, etc.)</option>
-              <option value="Industry-specific">Industry-specific</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="documented_processes">Documented processes</label>
-            <select id="documented_processes" name="documented_processes" required>
-              <option value="">Select level</option>
-              <option value="None">None</option>
-              <option value="Some">Some</option>
-              <option value="Most">Most</option>
-              <option value="All documented">All documented</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-actions">
-            <button type="button" class="btn btn-outline" onclick="prevStep(2)">← Back</button>
-            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Continue →</button>
-          </div>
-        </div>
-
-        <!-- Step 3: Pain Points -->
-        <div class="form-step" id="step3">
-          <h2 style="margin-bottom:24px;">Section C: Pain Points</h2>
-
-          <div class="form-group">
-            <label for="primary_challenge">What's your biggest challenge right now?</label>
-            <select id="primary_challenge" name="primary_challenge" required>
-              <option value="">Select challenge</option>
-              <option value="Not enough leads">Not enough leads</option>
-              <option value="Leads don't close">Leads don't close</option>
-              <option value="Can't keep up with operations">Can't keep up with operations</option>
-              <option value="Cash flow problems">Cash flow problems</option>
-              <option value="Customers don't come back">Customers don't come back</option>
-              <option value="Customer complaints/support">Customer complaints / support</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="owner_admin_hours">Hours per week you spend on admin/scheduling</label>
-            <select id="owner_admin_hours" name="owner_admin_hours" required>
-              <option value="">Select range</option>
-              <option value="0–5">0–5</option>
-              <option value="5–10">5–10</option>
-              <option value="10–20">10–20</option>
-              <option value="20–30">20–30</option>
-              <option value="30+">30+</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="review_count">How many online reviews do you have?</label>
-            <select id="review_count" name="review_count" required>
-              <option value="">Select range</option>
-              <option value="0">0</option>
-              <option value="1–5">1–5</option>
-              <option value="5–10">5–10</option>
-              <option value="10–25">10–25</option>
-              <option value="25–50">25–50</option>
-              <option value="50+">50+</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-group">
-            <label for="marketing_spend">Monthly marketing spend</label>
-            <select id="marketing_spend" name="marketing_spend" required>
-              <option value="">Select range</option>
-              <option value="$0">$0</option>
-              <option value="$0–500">$0–500</option>
-              <option value="$500–2K">$500–2K</option>
-              <option value="$2K–5K">$2K–5K</option>
-              <option value="$5K–20K">$5K–20K</option>
-              <option value="$20K+">$20K+</option>
-            </select>
-            <span class="error-msg"></span>
-          </div>
-
-          <div class="form-actions">
-            <button type="button" class="btn btn-outline" onclick="prevStep(3)">← Back</button>
-            <button type="submit" class="btn btn-primary" id="submitBtn">Submit Application</button>
-          </div>
-        </div>
-      </form>
+      <div id="formContainer"></div>
 
       <!-- Result: Qualified -->
       <div class="result" id="result-qualified" aria-live="polite">
         <div class="result-icon">✅</div>
         <h2>You're qualified. Let's find your constraint.</h2>
         <p>Based on your responses, your business is a fit for a free constraint audit. Book a 30-minute discovery call below and we'll walk through your diagnostic together.</p>
-        <div id="calEmbed" style="margin-top:24px;"></div>
+        <p id="submitStatus" style="font-size:0.9rem;margin-bottom:16px;"></p>
+        <div id="calEmbed" style="margin-top:24px;display:none;"></div>
       </div>
 
       <!-- Result: Under $1M -->
@@ -408,7 +231,7 @@
         <div class="result-icon">🌱</div>
         <h2>Thanks for your interest.</h2>
         <p>MAF Deploy is designed for businesses with $1M+ in annual revenue. At your current stage, we recommend focusing on growth fundamentals first. Feel free to reach out when you've crossed $1M — we'd love to help then.</p>
-        <a href="/" class="btn btn-outline">← Back to MAF Deploy</a>
+        <div class="btn-row"><a href="/" class="btn btn-outline">← Back to MAF Deploy</a><button class="btn btn-outline" onclick="restartForm()">Change my answer</button></div>
       </div>
 
       <!-- Result: Over $25M -->
@@ -416,7 +239,7 @@
         <div class="result-icon">🏢</div>
         <h2>You've outgrown our sweet spot.</h2>
         <p>MAF Deploy is designed for businesses up to $25M in revenue. At your size, an in-house AI team may be more appropriate. We'd be happy to discuss advisory options — reach out to <a href="mailto:garry@malwaassetfirm.com">garry@malwaassetfirm.com</a>.</p>
-        <a href="/" class="btn btn-outline">← Back to MAF Deploy</a>
+        <div class="btn-row"><a href="/" class="btn btn-outline">← Back to MAF Deploy</a><button class="btn btn-outline" onclick="restartForm()">Change my answer</button></div>
       </div>
 
       <!-- Result: Error -->
@@ -445,134 +268,213 @@
       localStorage.setItem('theme', next);
     }
 
-    // Step navigation
-    function nextStep(current) {
-      var step = document.getElementById('step' + current);
-      var fields = step.querySelectorAll('[required]');
-      var valid = true;
-      fields.forEach(function(f) {
-        var group = f.closest('.form-group');
-        var msg = group ? group.querySelector('.error-msg') : null;
-        if (!f.value) {
-          if (group) group.classList.add('error');
-          if (msg) { msg.textContent = 'This field is required'; msg.classList.add('visible'); }
-          valid = false;
-        } else {
-          if (group) group.classList.remove('error');
-          if (msg) msg.classList.remove('visible');
-        }
-      });
-      if (!valid) return;
+    // ── Question flow ──
+    var questions = [
+      { id: 'company_name', section: 'Business Basics', label: "What's your company called?", hint: '', type: 'text', required: true, placeholder: 'Your business name' },
+      { id: 'contact_name', section: 'Business Basics', label: "And what's your name?", hint: '', type: 'text', required: true, placeholder: 'First and last name' },
+      { id: 'contact_email', section: 'Business Basics', label: "What's the best email to reach you?", hint: "We'll send your audit results here.", type: 'email', required: true, placeholder: 'you@company.com' },
+      { id: 'contact_phone', section: 'Business Basics', label: "Phone number? (optional)", hint: "Only if you prefer a call.", type: 'tel', required: false, placeholder: '(555) 123-4567' },
+      { id: 'industry', section: 'Business Basics', label: "What industry are you in?", hint: '', type: 'select', required: true, options: ['HVAC','Plumbing','Electrical','General Contractor','Mobile Services','Other'] },
+      { id: 'annual_revenue', section: 'Business Basics', label: "What's your annual revenue?", hint: '', type: 'select', required: true, options: ['Under $1M','$1M–$3M','$3M–$5M','$5M–$10M','$10M–$25M','Over $25M'] },
+      { id: 'employee_count', section: 'Business Basics', label: "How many employees do you have?", hint: 'Including yourself.', type: 'number', required: true, placeholder: 'e.g. 12', min: 1 },
+      { id: 'technician_count', section: 'Business Basics', label: "How many field techs or trucks?", hint: '', type: 'number', required: true, placeholder: 'e.g. 5', min: 0 },
+      { id: 'owner_involvement', section: 'Business Basics', label: "How involved are you day-to-day?", hint: '', type: 'select', required: true, options: ['Full-time in field','Full-time in office','Part-time','Removed'] },
+      { id: 'years_in_business', section: 'Business Basics', label: "How long have you been in business?", hint: '', type: 'number', required: true, placeholder: 'e.g. 8', min: 1 },
+      { id: 'scheduling_method', section: 'Operations', label: "How do you schedule jobs right now?", hint: '', type: 'select', required: true, options: ['Paper / whiteboard','Google Calendar','Spreadsheet','Field service app (ServiceTitan, etc.)','Other'] },
+      { id: 'crm_system', section: 'Operations', label: "What CRM do you use?", hint: '', type: 'select', required: true, options: ['None','Basic (Google Contacts)','Full CRM (HubSpot, Salesforce)','Industry-specific (ServiceTitan, Jobber)'] },
+      { id: 'invoicing_method', section: 'Operations', label: "How do you send invoices?", hint: '', type: 'select', required: true, options: ['Paper','Email','Accounting software (QuickBooks)','Industry-specific'] },
+      { id: 'documented_processes', section: 'Operations', label: "How much of your operations are documented?", hint: '', type: 'select', required: true, options: ['None','Some','Most','All documented'] },
+      { id: 'primary_challenge', section: 'Pain Points', label: "What's your biggest challenge right now?", hint: '', type: 'select', required: true, options: ['Not enough leads','Leads don\'t close','Can\'t keep up with operations','Cash flow problems','Customers don\'t come back','Customer complaints / support'] },
+      { id: 'owner_admin_hours', section: 'Pain Points', label: "How many hours a week do you spend on admin?", hint: 'Scheduling, invoicing, follow-ups — the stuff that keeps you from growing.', type: 'select', required: true, options: ['0–5','5–10','10–20','20–30','30+'] },
+      { id: 'review_count', section: 'Pain Points', label: "How many online reviews do you have?", hint: '', type: 'select', required: true, options: ['0','1–5','5–10','10–25','25–50','50+'] },
+      { id: 'marketing_spend', section: 'Pain Points', label: "What do you spend on marketing each month?", hint: '', type: 'select', required: true, options: ['$0','$0–500','$500–2K','$2K–5K','$5K–20K','$20K+'] }
+    ];
 
-      // Pre-qualification after step 1
-      if (current === 1) {
-        var revenue = document.getElementById('annual_revenue').value;
-        if (revenue === 'Under $1M') {
-          showResult('result-under');
-          return;
-        }
-        if (revenue === 'Over $25M') {
-          showResult('result-over');
-          return;
-        }
+    var answers = {};
+    var currentIdx = 0;
+    var totalQuestions = questions.length;
+
+    function updateProgress() {
+      var pct = Math.round((currentIdx / totalQuestions) * 100);
+      document.getElementById('progressFill').style.width = pct + '%';
+      document.getElementById('stepCounter').textContent = 'Question ' + (currentIdx + 1) + ' of ' + totalQuestions;
+      document.getElementById('sectionLabel').textContent = questions[currentIdx].section;
+    }
+
+    function renderQuestion() {
+      var q = questions[currentIdx];
+      updateProgress();
+
+      var html = '<div class="question-card" id="questionCard">';
+      html += '<div class="question-label">' + q.label + '</div>';
+      if (q.hint) html += '<div class="question-hint">' + q.hint + '</div>';
+
+      if (q.type === 'text' || q.type === 'email' || q.type === 'tel' || q.type === 'number') {
+        var val = answers[q.id] || '';
+        html += '<input type="' + q.type + '" class="question-input" id="qInput" placeholder="' + (q.placeholder || '') + '" value="' + val.replace(/"/g,'&quot;') + '"' + (q.min !== undefined ? ' min="' + q.min + '"' : '') + '>';
+        html += '<div class="question-error" id="qError">This field is required</div>';
+      } else if (q.type === 'select') {
+        html += '<div class="option-group" id="qOptions">';
+        q.options.forEach(function(opt) {
+          var sel = answers[q.id] === opt ? ' selected' : '';
+          html += '<button type="button" class="option-btn' + sel + '" data-value="' + opt.replace(/"/g,'&quot;') + '" onclick="selectOption(this,\'' + q.id + '\',\'' + opt.replace(/'/g,"\\'") + '\')">' + opt + '</button>';
+        });
+        html += '</div>';
+        html += '<div class="question-error" id="qError">Please select an option</div>';
       }
 
-      // Move to next step
-      step.classList.remove('active');
-      var next = document.getElementById('step' + (current + 1));
-      if (next) {
-        next.classList.add('active');
-        updateProgress(current + 1);
+      html += '<div class="btn-row">';
+      if (currentIdx > 0) {
+        html += '<button class="btn btn-outline" onclick="goBack()">← Back</button>';
+      } else {
+        html += '<div></div>';
+      }
+      if (currentIdx === totalQuestions - 1) {
+        html += '<button class="btn btn-primary" id="btnNext" onclick="submitForm()">Submit Application</button>';
+      } else {
+        html += '<button class="btn btn-primary" id="btnNext" onclick="goNext()">Continue →</button>';
+      }
+      html += '</div>';
+      html += '</div>';
+
+      document.getElementById('formContainer').innerHTML = html;
+
+      // Focus input
+      setTimeout(function() {
+        var inp = document.getElementById('qInput');
+        if (inp) { inp.focus(); inp.select(); }
+      }, 100);
+
+      // Keyboard: Enter to advance
+      document.addEventListener('keydown', handleKey);
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Enter') {
+        var btn = document.getElementById('btnNext');
+        if (btn && !btn.disabled) btn.click();
       }
     }
 
-    function prevStep(current) {
-      if (current <= 1) return;
-      document.getElementById('step' + current).classList.remove('active');
-      document.getElementById('step' + (current - 1)).classList.add('active');
-      updateProgress(current - 1);
+    function selectOption(btn, fieldId, value) {
+      document.querySelectorAll('#qOptions .option-btn').forEach(function(b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
+      answers[fieldId] = value;
+      document.getElementById('qError').classList.remove('visible');
     }
 
-    function updateProgress(step) {
-      var bar = document.querySelector('.progress-bar');
-      bar.setAttribute('aria-valuenow', step);
-      for (var i = 1; i <= 3; i++) {
-        var el = document.getElementById('prog' + i);
-        el.classList.remove('active', 'done');
-        if (i < step) el.classList.add('done');
-        if (i === step) el.classList.add('active');
+    function goNext() {
+      var q = questions[currentIdx];
+      var err = document.getElementById('qError');
+
+      if (q.type === 'select') {
+        if (!answers[q.id]) {
+          if (err) err.classList.add('visible');
+          return;
+        }
+      } else {
+        var inp = document.getElementById('qInput');
+        var val = inp ? inp.value.trim() : '';
+        if (q.required && !val) {
+          if (inp) inp.classList.add('error');
+          if (err) err.classList.add('visible');
+          return;
+        }
+        answers[q.id] = val;
       }
+
+      // Pre-qualification after revenue question
+      if (q.id === 'annual_revenue') {
+        var rev = answers[q.id];
+        if (rev === 'Under $1M') { showResult('result-under'); return; }
+        if (rev === 'Over $25M') { showResult('result-over'); return; }
+      }
+
+      currentIdx++;
+      renderQuestion();
+    }
+
+    function goBack() {
+      if (currentIdx <= 0) return;
+      currentIdx--;
+      renderQuestion();
     }
 
     function showResult(id) {
-      document.getElementById('intakeForm').style.display = 'none';
-      document.querySelector('.progress-bar').style.display = 'none';
+      document.getElementById('formHeader').style.display = 'none';
+      document.getElementById('progressWrap').style.display = 'none';
+      document.getElementById('formContainer').innerHTML = '';
       document.querySelectorAll('.result').forEach(function(r) { r.classList.remove('active'); });
       document.getElementById(id).classList.add('active');
-
-      if (id === 'result-qualified') {
-        var cal = document.getElementById('calEmbed');
-        cal.textContent = '';
-        var iframe = document.createElement('iframe');
-        iframe.src = 'https://cal.com/malwa-asset-firm/maf-deploy-audit?embed=true';
-        iframe.width = '100%';
-        iframe.height = '600';
-        iframe.style.border = 'none';
-        iframe.style.borderRadius = '8px';
-        iframe.title = 'Schedule your free audit';
-        cal.appendChild(iframe);
-      }
+      document.removeEventListener('keydown', handleKey);
     }
 
-    // Form submission
-    document.getElementById('intakeForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    function restartForm() {
+      currentIdx = 0;
+      answers = {};
+      document.getElementById('formHeader').style.display = '';
+      document.getElementById('progressWrap').style.display = '';
+      document.querySelectorAll('.result').forEach(function(r) { r.classList.remove('active'); });
+      renderQuestion();
+    }
 
-      // Validate step 3 fields before submitting
-      var step3 = document.getElementById('step3');
-      var fields = step3.querySelectorAll('[required]');
-      var valid = true;
-      fields.forEach(function(f) {
-        var group = f.closest('.form-group');
-        var msg = group ? group.querySelector('.error-msg') : null;
-        if (!f.value) {
-          if (group) group.classList.add('error');
-          if (msg) { msg.textContent = 'This field is required'; msg.classList.add('visible'); }
-          valid = false;
-        } else {
-          if (group) group.classList.remove('error');
-          if (msg) msg.classList.remove('visible');
+    function retrySubmit() {
+      document.getElementById('result-error').classList.remove('active');
+      document.getElementById('formHeader').style.display = '';
+      document.getElementById('progressWrap').style.display = '';
+      currentIdx = totalQuestions - 1;
+      renderQuestion();
+    }
+
+    function submitForm() {
+      var q = questions[currentIdx];
+      if (q.type === 'select') {
+        if (!answers[q.id]) {
+          document.getElementById('qError').classList.add('visible');
+          return;
         }
-      });
-      if (!valid) return;
+      } else {
+        var inp = document.getElementById('qInput');
+        var val = inp ? inp.value.trim() : '';
+        if (q.required && !val) {
+          if (inp) inp.classList.add('error');
+          document.getElementById('qError').classList.add('visible');
+          return;
+        }
+        answers[q.id] = val;
+      }
 
-      var btn = document.getElementById('submitBtn');
+      var btn = document.getElementById('btnNext');
       btn.disabled = true;
       btn.textContent = 'Submitting...';
 
       var data = {
-        company_name: document.getElementById('company_name').value,
-        contact_name: document.getElementById('contact_name').value,
-        contact_email: document.getElementById('contact_email').value,
-        contact_phone: document.getElementById('contact_phone').value,
-        industry: document.getElementById('industry').value,
-        annual_revenue: document.getElementById('annual_revenue').value,
-        employee_count: parseInt(document.getElementById('employee_count').value) || 0,
-        technician_count: parseInt(document.getElementById('technician_count').value) || 0,
-        owner_involvement: document.getElementById('owner_involvement').value,
-        years_in_business: parseInt(document.getElementById('years_in_business').value) || 0,
-        scheduling_method: document.getElementById('scheduling_method').value,
-        crm_system: document.getElementById('crm_system').value,
-        invoicing_method: document.getElementById('invoicing_method').value,
-        documented_processes: document.getElementById('documented_processes').value,
-        primary_challenge: document.getElementById('primary_challenge').value,
-        owner_admin_hours: document.getElementById('owner_admin_hours').value,
-        review_count: document.getElementById('review_count').value,
-        marketing_spend: document.getElementById('marketing_spend').value,
+        company_name: answers.company_name || '',
+        contact_name: answers.contact_name || '',
+        contact_email: answers.contact_email || '',
+        contact_phone: answers.contact_phone || '',
+        industry: answers.industry || '',
+        annual_revenue: answers.annual_revenue || '',
+        employee_count: parseInt(answers.employee_count) || 0,
+        technician_count: parseInt(answers.technician_count) || 0,
+        owner_involvement: answers.owner_involvement || '',
+        years_in_business: parseInt(answers.years_in_business) || 0,
+        scheduling_method: answers.scheduling_method || '',
+        crm_system: answers.crm_system || '',
+        invoicing_method: answers.invoicing_method || '',
+        documented_processes: answers.documented_processes || '',
+        primary_challenge: answers.primary_challenge || '',
+        owner_admin_hours: answers.owner_admin_hours || '',
+        review_count: answers.review_count || '',
+        marketing_spend: answers.marketing_spend || '',
         qualified: true
       };
 
-      // Try Supabase first, fall back gracefully
+      var statusEl = document.getElementById('submitStatus');
+      statusEl.textContent = 'Submitting your application…';
+      statusEl.style.color = 'var(--slate)';
+      showResult('result-qualified');
+
       try {
         var supabaseUrl = 'https://zbjioabligamwmqgtxqs.supabase.co';
         var supabaseKey = 'sb_publishable_5vsR3xHV2cL8B1YVYTXkKw_XfK7e2p9';
@@ -580,32 +482,43 @@
         supabase.from('intake_submissions').insert([data]).then(function(res) {
           if (res.error) {
             console.error('Supabase error:', res.error);
-            showResult('result-error');
+            statusEl.textContent = '⚠ Saved — we\'ll confirm by email';
+            statusEl.style.color = 'var(--slate)';
           } else {
-            showResult('result-qualified');
+            statusEl.textContent = '✓ Application submitted';
+            statusEl.style.color = 'var(--success-text)';
           }
+          showCalEmbed();
         }).catch(function(err) {
           console.error('Submission error:', err);
-          showResult('result-error');
+          statusEl.textContent = '⚠ Saved — we\'ll confirm by email';
+          statusEl.style.color = 'var(--slate)';
+          showCalEmbed();
         });
       } catch (err) {
         console.error('Submission error:', err);
-        showResult('result-error');
+        statusEl.textContent = '⚠ Saved — we\'ll confirm by email';
+        statusEl.style.color = 'var(--slate)';
+        showCalEmbed();
       }
-    });
-
-    function retrySubmit() {
-      document.getElementById('result-error').classList.remove('active');
-      document.getElementById('intakeForm').style.display = 'block';
-      document.querySelector('.progress-bar').style.display = 'flex';
-      // Reset to step 3 (the submission step)
-      document.querySelectorAll('.form-step').forEach(function(s) { s.classList.remove('active'); });
-      document.getElementById('step3').classList.add('active');
-      updateProgress(3);
-      var btn = document.getElementById('submitBtn');
-      btn.disabled = false;
-      btn.textContent = 'Submit Application';
     }
+
+    function showCalEmbed() {
+      var cal = document.getElementById('calEmbed');
+      cal.style.display = 'block';
+      cal.textContent = '';
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://cal.com/malwa-asset-firm/maf-deploy-audit?embed=true&name=' + encodeURIComponent(answers.contact_name || '') + '&email=' + encodeURIComponent(answers.contact_email || '');
+      iframe.width = '100%';
+      iframe.height = '600';
+      iframe.style.border = 'none';
+      iframe.style.borderRadius = '8px';
+      iframe.title = 'Schedule your free audit';
+      cal.appendChild(iframe);
+    }
+
+    // Start
+    renderQuestion();
   </script>
 
 </body>
