@@ -13,9 +13,11 @@
   <meta name="twitter:title" content="MAF Deploy — Forward-Deployed AI Team">
   <meta name="twitter:description" content="We deploy AI into your business. A forward-deployed AI team for service businesses $1M–$25M.">
   <link rel="canonical" href="https://deploy.malwaassetfirm.com/">
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23533afd'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='system-ui' font-size='18' font-weight='600'>M</text></svg>">
   <script>(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);})();</script>
   <style>
@@ -75,6 +77,10 @@
     }
 
     html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
     body {
       font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-weight: 400;
@@ -95,6 +101,12 @@
     .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
     /* Nav */
+    .skip-link {
+      position: absolute; top: -100px; left: 16px;
+      background: var(--purple); color: #fff; padding: 8px 16px;
+      border-radius: var(--radius-sm); z-index: 200; font-weight: 500;
+    }
+    .skip-link:focus { top: 8px; }
     .nav {
       position: sticky; top: 0; z-index: 100;
       background: var(--nav-bg); backdrop-filter: blur(12px);
@@ -109,7 +121,7 @@
     /* Theme toggle */
     .theme-toggle {
       background: none; border: 1px solid var(--border); border-radius: var(--radius);
-      color: var(--text); cursor: pointer; width: 36px; height: 36px;
+      color: var(--text); cursor: pointer; width: 44px; height: 44px;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.1rem; transition: all 0.2s;
     }
@@ -145,7 +157,7 @@
     .btn-lg { padding: 16px 40px; font-size: 1.1rem; }
     .trust-badges {
       margin-top: 40px; display: flex; justify-content: center; align-items: center;
-      gap: 16px; color: rgba(255,255,255,0.5); font-size: 0.9rem; flex-wrap: wrap;
+      gap: 16px; color: rgba(255,255,255,0.62); font-size: 0.9rem; flex-wrap: wrap;
     }
     .badge-divider { color: rgba(255,255,255,0.2); }
 
@@ -241,7 +253,7 @@
     }
     .guarantee-card h2 { margin-bottom: 20px; }
     .guarantee-card p { font-size: 1.05rem; line-height: 1.6; margin-bottom: 12px; }
-    .guarantee-sub { font-size: 0.9rem !important; color: var(--slate); margin-top: 16px !important; }
+    .guarantee-card .guarantee-sub { font-size: 0.9rem; color: var(--slate); margin-top: 16px; }
 
     /* FAQ */
     .faq-list { max-width: 700px; margin: 0 auto; }
@@ -285,26 +297,28 @@
 </head>
 <body>
 
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <nav class="nav">
     <div class="container">
       <div class="nav-logo">MAF <span>Deploy</span></div>
       <div class="nav-actions">
-        <a href="#audit" class="btn btn-primary" style="padding:8px 20px;font-size:0.9rem;">Get Your Free Audit →</a>
+        <a href="https://cal.com/malwa-asset-firm/maf-deploy-audit?utm_source=deploy&utm_medium=nav&utm_campaign=audit" class="btn btn-primary btn-nav">Get Your Free Audit →</a>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
-          <span class="icon-sun">☀️</span>
-          <span class="icon-moon">🌙</span>
+          <span class="icon-sun" aria-hidden="true">☀️</span>
+          <span class="icon-moon" aria-hidden="true">🌙</span>
         </button>
       </div>
     </div>
   </nav>
 
-  <main>
+  <main id="main-content">
     <!-- Hero -->
     <section id="hero" class="hero">
       <div class="container">
         <h1>We Deploy AI Into Your Business</h1>
         <p class="hero-sub">Not a tool. Not a platform. A forward-deployed AI team that diagnoses what's broken, builds on top of your existing systems, and runs your operations 24/7.</p>
-        <a href="https://cal.com/malwa-asset-firm/maf-deploy-audit" class="btn btn-primary btn-lg">Get Your Free Audit →</a>
+        <a href="https://cal.com/malwa-asset-firm/maf-deploy-audit?utm_source=deploy&utm_medium=hero&utm_campaign=audit" class="btn btn-primary btn-lg">Get Your Free Audit →</a>
         <div class="trust-badges">
           <span>Service businesses $1M–$25M</span>
           <span class="badge-divider">|</span>
@@ -424,10 +438,10 @@
           <table class="tier-table">
             <thead>
               <tr>
-                <th></th>
-                <th class="tier-header focused">Deploy Focused</th>
-                <th class="tier-header scale">Deploy Scale</th>
-                <th class="tier-header command">Deploy Command</th>
+                <th scope="col"></th>
+                <th scope="col" class="tier-header focused">Deploy Focused</th>
+                <th scope="col" class="tier-header scale">Deploy Scale</th>
+                <th scope="col" class="tier-header command">Deploy Command</th>
               </tr>
             </thead>
             <tbody>
@@ -542,7 +556,7 @@
     <section id="cta" class="cta-section">
       <div class="container">
         <h2>Find your constraint. Deploy against it. See results in 60 days.</h2>
-        <a href="https://cal.com/malwa-asset-firm/maf-deploy-audit" class="btn btn-primary btn-lg">Get Your Free Audit →</a>
+        <a href="https://cal.com/malwa-asset-firm/maf-deploy-audit?utm_source=deploy&utm_medium=cta&utm_campaign=audit" class="btn btn-primary btn-lg">Get Your Free Audit →</a>
         <p class="cta-sub">No obligation. No catch. We lose money on every audit that doesn't convert — we're betting our value demonstration works.</p>
       </div>
     </section>
@@ -568,8 +582,12 @@
       var isOpen = item.classList.contains('open');
       // Close all
       document.querySelectorAll('.faq-item').forEach(function(el) { el.classList.remove('open'); });
+      document.querySelectorAll('.faq-question').forEach(function(el) { el.setAttribute('aria-expanded', 'false'); });
       // Open clicked (unless it was already open)
-      if (!isOpen) item.classList.add('open');
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
     }
   </script>
 
