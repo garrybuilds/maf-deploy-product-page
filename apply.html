@@ -13,9 +13,11 @@
   <meta name="twitter:title" content="Apply for a Free Audit — MAF Deploy">
   <meta name="twitter:description" content="Get a free 24+ metric constraint audit for your service business.">
   <link rel="canonical" href="https://deploy.malwaassetfirm.com/apply">
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23533afd'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='system-ui' font-size='18' font-weight='600'>M</text></svg>">
   <script>(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);})();</script>
   <style>
@@ -34,6 +36,10 @@
     }
 
     html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
     body {
       font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-weight: 400; color: var(--text); background: var(--bg);
@@ -47,6 +53,12 @@
     .container { max-width: 640px; margin: 0 auto; padding: 0 24px; }
 
     /* Nav */
+    .skip-link {
+      position: absolute; top: -100px; left: 16px;
+      background: var(--purple); color: #fff; padding: 8px 16px;
+      border-radius: var(--radius); z-index: 200; font-weight: 500;
+    }
+    .skip-link:focus { top: 8px; }
     .nav {
       position: sticky; top: 0; z-index: 100;
       background: var(--bg); border-bottom: 1px solid var(--border);
@@ -58,7 +70,7 @@
     .nav-logo a { color: inherit; text-decoration: none; }
     .theme-toggle {
       background: none; border: 1px solid var(--border); border-radius: var(--radius);
-      color: var(--text); cursor: pointer; width: 36px; height: 36px;
+      color: var(--text); cursor: pointer; width: 44px; height: 44px;
       display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
     }
     .theme-toggle:hover { border-color: var(--purple); color: var(--purple); }
@@ -97,7 +109,7 @@
       transition: border-color 0.2s;
     }
     .form-group select:focus, .form-group input:focus {
-      outline: none; border-color: var(--purple);
+      outline: 2px solid var(--purple); outline-offset: 2px; border-color: var(--purple);
     }
     .form-group .hint { font-size: 0.8rem; color: var(--slate); margin-top: 4px; }
 
@@ -139,24 +151,26 @@
 </head>
 <body>
 
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <nav class="nav">
     <div class="container">
       <div class="nav-logo"><a href="/">MAF <span>Deploy</span></a></div>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
-        <span class="icon-sun">☀️</span>
-        <span class="icon-moon">🌙</span>
+        <span class="icon-sun" aria-hidden="true">☀️</span>
+        <span class="icon-moon" aria-hidden="true">🌙</span>
       </button>
     </div>
   </nav>
 
-  <main>
+  <main id="main-content">
     <div class="container">
       <div class="form-header">
         <h1>Apply for a Free Constraint Audit</h1>
         <p>15 questions. 3 minutes. We'll diagnose your business's binding constraint and show you where AI can make the biggest impact.</p>
       </div>
 
-      <div class="progress-bar">
+      <div class="progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="3" aria-label="Form progress">
         <div class="progress-step active" id="prog1"></div>
         <div class="progress-step" id="prog2"></div>
         <div class="progress-step" id="prog3"></div>
@@ -348,7 +362,7 @@
       </form>
 
       <!-- Result: Qualified -->
-      <div class="result" id="result-qualified">
+      <div class="result" id="result-qualified" aria-live="polite">
         <div class="result-icon">✅</div>
         <h2>You're qualified. Let's find your constraint.</h2>
         <p>Based on your responses, your business is a fit for a free constraint audit. Book a 30-minute discovery call below and we'll walk through your diagnostic together.</p>
@@ -356,7 +370,7 @@
       </div>
 
       <!-- Result: Under $1M -->
-      <div class="result" id="result-under">
+      <div class="result" id="result-under" aria-live="polite">
         <div class="result-icon">🌱</div>
         <h2>Thanks for your interest.</h2>
         <p>MAF Deploy is designed for businesses with $1M+ in annual revenue. At your current stage, we recommend focusing on growth fundamentals first. Feel free to reach out when you've crossed $1M — we'd love to help then.</p>
@@ -364,7 +378,7 @@
       </div>
 
       <!-- Result: Over $25M -->
-      <div class="result" id="result-over">
+      <div class="result" id="result-over" aria-live="polite">
         <div class="result-icon">🏢</div>
         <h2>You've outgrown our sweet spot.</h2>
         <p>MAF Deploy is designed for businesses up to $25M in revenue. At your size, an in-house AI team may be more appropriate. We'd be happy to discuss advisory options — reach out to <a href="mailto:garry@malwaassetfirm.com">garry@malwaassetfirm.com</a>.</p>
@@ -372,7 +386,7 @@
       </div>
 
       <!-- Result: Error -->
-      <div class="result" id="result-error">
+      <div class="result" id="result-error" role="alert">
         <div class="result-icon">⚠️</div>
         <h2>Something went wrong.</h2>
         <p>We couldn't submit your application. Please try again or email us directly at <a href="mailto:garry@malwaassetfirm.com">garry@malwaassetfirm.com</a>.</p>
@@ -388,7 +402,7 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script>
     function toggleTheme() {
       var current = document.documentElement.getAttribute('data-theme');
@@ -456,9 +470,16 @@
       document.getElementById(id).classList.add('active');
 
       if (id === 'result-qualified') {
-        // Load Cal.com embed
         var cal = document.getElementById('calEmbed');
-        cal.innerHTML = '<iframe src="https://cal.com/malwa-asset-firm/maf-deploy-audit?embed=true" width="100%" height="600" frameborder="0" style="border-radius:8px;"></iframe>';
+        cal.textContent = '';
+        var iframe = document.createElement('iframe');
+        iframe.src = 'https://cal.com/malwa-asset-firm/maf-deploy-audit?embed=true';
+        iframe.width = '100%';
+        iframe.height = '600';
+        iframe.style.border = 'none';
+        iframe.style.borderRadius = '8px';
+        iframe.title = 'Schedule your free audit';
+        cal.appendChild(iframe);
       }
     }
 
