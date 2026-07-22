@@ -130,6 +130,25 @@
     .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--heading); }
     .btn-outline:hover { border-color: var(--purple); color: var(--purple); }
 
+    /* Hero */
+    .hero {
+      min-height: 80vh; display: flex; align-items: center; text-align: center;
+      background: linear-gradient(135deg, var(--brand-dark) 0%, #2d1b69 50%, var(--brand-dark) 100%);
+      padding: 120px 0 80px;
+    }
+    [data-theme="dark"] .hero { background: linear-gradient(135deg, #0a0a14 0%, #1a1035 50%, #0a0a14 100%); }
+    .hero h1 { color: #fff; margin-bottom: 20px; }
+    .hero-sub {
+      color: rgba(255,255,255,0.75); font-size: 1.2rem; max-width: 650px;
+      margin: 0 auto 32px; line-height: 1.6;
+    }
+    .btn-lg { padding: 16px 40px; font-size: 1.1rem; }
+    .trust-badges {
+      margin-top: 40px; display: flex; justify-content: center; align-items: center;
+      gap: 16px; color: rgba(255,255,255,0.5); font-size: 0.9rem; flex-wrap: wrap;
+    }
+    .badge-divider { color: rgba(255,255,255,0.2); }
+
     /* Sections */
     section { padding: 80px 0; }
     .section-header { text-align: center; max-width: 700px; margin: 0 auto 48px; }
@@ -167,10 +186,19 @@
   </nav>
 
   <main>
-    <!-- Placeholder sections — content added in subsequent tasks -->
-    <section id="hero" style="min-height:60vh;display:flex;align-items:center;text-align:center;">
+    <!-- Hero -->
+    <section id="hero" class="hero">
       <div class="container">
-        <p style="color:var(--slate);">Hero section — Task 3</p>
+        <h1>We Deploy AI Into Your Business</h1>
+        <p class="hero-sub">Not a tool. Not a platform. A forward-deployed AI team that diagnoses what's broken, builds on top of your existing systems, and runs your operations 24/7.</p>
+        <a href="https://cal.com/malwa-asset-firm/maf-deploy-audit" class="btn btn-primary btn-lg">Get Your Free Audit →</a>
+        <div class="trust-badges">
+          <span>Service businesses $1M–$25M</span>
+          <span class="badge-divider">|</span>
+          <span>Free 24+ metric audit</span>
+          <span class="badge-divider">|</span>
+          <span>12-month minimum</span>
+        </div>
       </div>
     </section>
   </main>
