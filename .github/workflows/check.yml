@@ -1,0 +1,11 @@
+name: Check
+on: [push, pull_request]
+jobs:
+  html-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate HTML
+        run: |
+          npm install -g html-validate
+          html-validate index.html apply.html

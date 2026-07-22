@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply for a Free Audit — MAF Deploy | Malwa Asset Firm</title>
+  <meta name="description" content="Apply for a free constraint audit. We'll diagnose your business's binding constraint and show you where AI can make the biggest impact.">
+  <meta property="og:title" content="Apply for a Free Audit — MAF Deploy">
+  <meta property="og:description" content="Get a free 24+ metric constraint audit for your service business.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://deploy.malwaassetfirm.com/apply">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Apply for a Free Audit — MAF Deploy">
+  <meta name="twitter:description" content="Get a free 24+ metric constraint audit for your service business.">
+  <link rel="canonical" href="https://deploy.malwaassetfirm.com/apply">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23533afd'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='system-ui' font-size='18' font-weight='600'>M</text></svg>">
+  <script>(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);})();</script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #533afd; --purple-hover: #4434d4; --navy: #061b31; --slate: #64748d;
+      --white: #ffffff; --border: #e5edf5; --bg: #ffffff; --bg-alt: #f8f9fc;
+      --card-bg: #ffffff; --text: #64748d; --heading: #061b31;
+      --radius: 6px; --radius-lg: 8px; --success: #15be53; --error: #ef4444;
+    }
+    [data-theme="dark"] {
+      --purple: #7c6ff7; --purple-hover: #6a5ce5; --navy: #e2e8f0; --slate: #94a3b8;
+      --white: #0f1117; --border: #1e293b; --bg: #0f1117; --bg-alt: #15171f;
+      --card-bg: #1a1d27; --text: #94a3b8; --heading: #e2e8f0;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 400; color: var(--text); background: var(--bg);
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+      min-height: 100vh; display: flex; flex-direction: column;
+    }
+    h1, h2, h3 { color: var(--heading); font-weight: 300; line-height: 1.2; }
+    h1 { font-size: clamp(1.5rem, 3vw, 2rem); }
+    h2 { font-size: 1.3rem; }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+    }
+    .nav .container { display: flex; justify-content: space-between; align-items: center; }
+    .nav-logo { font-weight: 600; font-size: 1rem; color: var(--heading); }
+    .nav-logo span { color: var(--purple); }
+    .nav-logo a { color: inherit; text-decoration: none; }
+    .theme-toggle {
+      background: none; border: 1px solid var(--border); border-radius: var(--radius);
+      color: var(--text); cursor: pointer; width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .theme-toggle:hover { border-color: var(--purple); color: var(--purple); }
+    [data-theme="dark"] .icon-sun { display: inline; }
+    [data-theme="dark"] .icon-moon { display: none; }
+    [data-theme="light"] .icon-sun { display: none; }
+    [data-theme="light"] .icon-moon { display: inline; }
+
+    /* Form */
+    main { flex: 1; padding: 48px 0; }
+    .form-header { text-align: center; margin-bottom: 40px; }
+    .form-header p { margin-top: 8px; color: var(--slate); }
+
+    .progress-bar {
+      display: flex; gap: 8px; margin-bottom: 32px;
+    }
+    .progress-step {
+      flex: 1; height: 4px; border-radius: 2px; background: var(--border);
+      transition: background 0.3s;
+    }
+    .progress-step.active { background: var(--purple); }
+    .progress-step.done { background: var(--success); }
+
+    .form-step { display: none; }
+    .form-step.active { display: block; }
+
+    .form-group { margin-bottom: 24px; }
+    .form-group label {
+      display: block; font-weight: 500; color: var(--heading);
+      margin-bottom: 6px; font-size: 0.95rem;
+    }
+    .form-group select, .form-group input {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--border);
+      border-radius: var(--radius); font-family: 'Source Sans 3', sans-serif;
+      font-size: 1rem; color: var(--heading); background: var(--card-bg);
+      transition: border-color 0.2s;
+    }
+    .form-group select:focus, .form-group input:focus {
+      outline: none; border-color: var(--purple);
+    }
+    .form-group .hint { font-size: 0.8rem; color: var(--slate); margin-top: 4px; }
+
+    .btn {
+      display: inline-block; padding: 12px 28px; border-radius: var(--radius);
+      font-family: 'Source Sans 3', sans-serif; font-weight: 500; font-size: 1rem;
+      cursor: pointer; transition: all 0.2s; border: none; text-align: center;
+    }
+    .btn-primary { background: var(--purple); color: #fff; }
+    .btn-primary:hover { background: var(--purple-hover); color: #fff; }
+    .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--heading); }
+    .btn-outline:hover { border-color: var(--purple); color: var(--purple); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .form-actions { display: flex; gap: 12px; justify-content: space-between; margin-top: 32px; }
+
+    /* Result screens */
+    .result { display: none; text-align: center; padding: 48px 0; }
+    .result.active { display: block; }
+    .result-icon { font-size: 3rem; margin-bottom: 16px; }
+    .result h2 { margin-bottom: 12px; }
+    .result p { margin-bottom: 24px; color: var(--slate); max-width: 500px; margin-left: auto; margin-right: auto; }
+
+    .error-msg { color: var(--error); font-size: 0.85rem; margin-top: 4px; display: none; }
+    .error-msg.visible { display: block; }
+
+    footer {
+      background: var(--bg-alt); border-top: 1px solid var(--border);
+      padding: 32px 0; text-align: center; color: var(--slate); font-size: 0.85rem;
+    }
+    footer a { color: var(--slate); }
+    footer a:hover { color: var(--purple); }
+
+    @media (max-width: 768px) {
+      main { padding: 32px 0; }
+      .container { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="container">
+      <div class="nav-logo"><a href="/">MAF <span>Deploy</span></a></div>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="container">
+      <div class="form-header">
+        <h1>Apply for a Free Constraint Audit</h1>
+        <p>15 questions. 3 minutes. We'll diagnose your business's binding constraint and show you where AI can make the biggest impact.</p>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-step active" id="prog1"></div>
+        <div class="progress-step" id="prog2"></div>
+        <div class="progress-step" id="prog3"></div>
+      </div>
+
+      <form id="intakeForm" onsubmit="return false;">
+        <!-- Step 1: Business Basics -->
+        <div class="form-step active" id="step1">
+          <h2 style="margin-bottom:24px;">Section A: Business Basics</h2>
+
+          <div class="form-group">
+            <label for="company_name">Company name</label>
+            <input type="text" id="company_name" name="company_name" required placeholder="Your business name">
+          </div>
+
+          <div class="form-group">
+            <label for="industry">Industry</label>
+            <select id="industry" name="industry" required>
+              <option value="">Select your industry</option>
+              <option value="HVAC">HVAC</option>
+              <option value="Plumbing">Plumbing</option>
+              <option value="Electrical">Electrical</option>
+              <option value="General Contractor">General Contractor</option>
+              <option value="Mobile Services">Mobile Services</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="annual_revenue">Annual revenue</label>
+            <select id="annual_revenue" name="annual_revenue" required>
+              <option value="">Select revenue range</option>
+              <option value="Under $1M">Under $1M</option>
+              <option value="$1M–$3M">$1M–$3M</option>
+              <option value="$3M–$5M">$3M–$5M</option>
+              <option value="$5M–$10M">$5M–$10M</option>
+              <option value="$10M–$25M">$10M–$25M</option>
+              <option value="Over $25M">Over $25M</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="employee_count">Number of employees (including owner)</label>
+            <input type="number" id="employee_count" name="employee_count" required min="1" placeholder="e.g. 12">
+          </div>
+
+          <div class="form-group">
+            <label for="technician_count">Number of field technicians / trucks</label>
+            <input type="number" id="technician_count" name="technician_count" required min="0" placeholder="e.g. 5">
+          </div>
+
+          <div class="form-group">
+            <label for="owner_involvement">Owner involvement</label>
+            <select id="owner_involvement" name="owner_involvement" required>
+              <option value="">Select involvement level</option>
+              <option value="Full-time in field">Full-time in field</option>
+              <option value="Full-time in office">Full-time in office</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Removed">Removed</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="years_in_business">Years in business</label>
+            <input type="number" id="years_in_business" name="years_in_business" required min="0" placeholder="e.g. 8">
+          </div>
+
+          <div class="form-actions">
+            <div></div>
+            <button type="button" class="btn btn-primary" onclick="nextStep(1)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Operational Infrastructure -->
+        <div class="form-step" id="step2">
+          <h2 style="margin-bottom:24px;">Section B: Operational Infrastructure</h2>
+
+          <div class="form-group">
+            <label for="scheduling_method">How do you schedule jobs?</label>
+            <select id="scheduling_method" name="scheduling_method" required>
+              <option value="">Select method</option>
+              <option value="Paper/whiteboard">Paper / whiteboard</option>
+              <option value="Google Calendar">Google Calendar</option>
+              <option value="Spreadsheet">Spreadsheet</option>
+              <option value="Field service app">Field service app (ServiceTitan, Housecall Pro, etc.)</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="crm_system">CRM system</label>
+            <select id="crm_system" name="crm_system" required>
+              <option value="">Select CRM</option>
+              <option value="None">None</option>
+              <option value="Basic">Basic (Google Contacts, etc.)</option>
+              <option value="Full CRM">Full CRM (HubSpot, Salesforce)</option>
+              <option value="Industry-specific">Industry-specific (ServiceTitan, Housecall Pro, Jobber)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="invoicing_method">How do you send invoices?</label>
+            <select id="invoicing_method" name="invoicing_method" required>
+              <option value="">Select method</option>
+              <option value="Paper">Paper</option>
+              <option value="Email">Email</option>
+              <option value="Accounting software">Accounting software (QuickBooks, etc.)</option>
+              <option value="Industry-specific">Industry-specific</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="documented_processes">Documented processes</label>
+            <select id="documented_processes" name="documented_processes" required>
+              <option value="">Select level</option>
+              <option value="None">None</option>
+              <option value="Some">Some</option>
+              <option value="Most">Most</option>
+              <option value="All documented">All documented</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" onclick="prevStep(2)">← Back</button>
+            <button type="button" class="btn btn-primary" onclick="nextStep(2)">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Pain Points -->
+        <div class="form-step" id="step3">
+          <h2 style="margin-bottom:24px;">Section C: Pain Points</h2>
+
+          <div class="form-group">
+            <label for="primary_challenge">What's your biggest challenge right now?</label>
+            <select id="primary_challenge" name="primary_challenge" required>
+              <option value="">Select challenge</option>
+              <option value="Not enough leads">Not enough leads</option>
+              <option value="Leads don't close">Leads don't close</option>
+              <option value="Can't keep up with operations">Can't keep up with operations</option>
+              <option value="Cash flow problems">Cash flow problems</option>
+              <option value="Customers don't come back">Customers don't come back</option>
+              <option value="Customer complaints/support">Customer complaints / support</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="owner_admin_hours">Hours per week you spend on admin/scheduling</label>
+            <select id="owner_admin_hours" name="owner_admin_hours" required>
+              <option value="">Select range</option>
+              <option value="0–5">0–5</option>
+              <option value="5–10">5–10</option>
+              <option value="10–20">10–20</option>
+              <option value="20–30">20–30</option>
+              <option value="30+">30+</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="review_count">How many online reviews do you have?</label>
+            <select id="review_count" name="review_count" required>
+              <option value="">Select range</option>
+              <option value="0">0</option>
+              <option value="1–5">1–5</option>
+              <option value="5–10">5–10</option>
+              <option value="10–25">10–25</option>
+              <option value="25–50">25–50</option>
+              <option value="50+">50+</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="marketing_spend">Monthly marketing spend</label>
+            <select id="marketing_spend" name="marketing_spend" required>
+              <option value="">Select range</option>
+              <option value="$0">$0</option>
+              <option value="$0–500">$0–500</option>
+              <option value="$500–2K">$500–2K</option>
+              <option value="$2K–5K">$2K–5K</option>
+              <option value="$5K–20K">$5K–20K</option>
+              <option value="$20K+">$20K+</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-outline" onclick="prevStep(3)">← Back</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Submit Application</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Result: Qualified -->
+      <div class="result" id="result-qualified">
+        <div class="result-icon">✅</div>
+        <h2>You're qualified. Let's find your constraint.</h2>
+        <p>Based on your responses, your business is a fit for a free constraint audit. Book a 30-minute discovery call below and we'll walk through your diagnostic together.</p>
+        <div id="calEmbed" style="margin-top:24px;"></div>
+      </div>
+
+      <!-- Result: Under $1M -->
+      <div class="result" id="result-under">
+        <div class="result-icon">🌱</div>
+        <h2>Thanks for your interest.</h2>
+        <p>MAF Deploy is designed for businesses with $1M+ in annual revenue. At your current stage, we recommend focusing on growth fundamentals first. Feel free to reach out when you've crossed $1M — we'd love to help then.</p>
+        <a href="/" class="btn btn-outline">← Back to MAF Deploy</a>
+      </div>
+
+      <!-- Result: Over $25M -->
+      <div class="result" id="result-over">
+        <div class="result-icon">🏢</div>
+        <h2>You've outgrown our sweet spot.</h2>
+        <p>MAF Deploy is designed for businesses up to $25M in revenue. At your size, an in-house AI team may be more appropriate. We'd be happy to discuss advisory options — reach out to <a href="mailto:garry@malwaassetfirm.com">garry@malwaassetfirm.com</a>.</p>
+        <a href="/" class="btn btn-outline">← Back to MAF Deploy</a>
+      </div>
+
+      <!-- Result: Error -->
+      <div class="result" id="result-error">
+        <div class="result-icon">⚠️</div>
+        <h2>Something went wrong.</h2>
+        <p>We couldn't submit your application. Please try again or email us directly at <a href="mailto:garry@malwaassetfirm.com">garry@malwaassetfirm.com</a>.</p>
+        <button class="btn btn-primary" onclick="retrySubmit()">Try Again</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>MAF Deploy is a product of <a href="https://malwaassetfirm.com">Malwa Asset Firm</a></p>
+      <p style="margin-top:4px;"><a href="mailto:garry@malwaassetfirm.com">garry@malwaassetfirm.com</a></p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    function toggleTheme() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    // Step navigation
+    function nextStep(current) {
+      var step = document.getElementById('step' + current);
+      var fields = step.querySelectorAll('[required]');
+      var valid = true;
+      fields.forEach(function(f) {
+        if (!f.value) {
+          f.style.borderColor = 'var(--error)';
+          valid = false;
+        } else {
+          f.style.borderColor = 'var(--border)';
+        }
+      });
+      if (!valid) return;
+
+      // Pre-qualification after step 1
+      if (current === 1) {
+        var revenue = document.getElementById('annual_revenue').value;
+        if (revenue === 'Under $1M') {
+          showResult('result-under');
+          return;
+        }
+        if (revenue === 'Over $25M') {
+          showResult('result-over');
+          return;
+        }
+      }
+
+      // Move to next step
+      step.classList.remove('active');
+      var next = document.getElementById('step' + (current + 1));
+      if (next) {
+        next.classList.add('active');
+        updateProgress(current + 1);
+      }
+    }
+
+    function prevStep(current) {
+      document.getElementById('step' + current).classList.remove('active');
+      document.getElementById('step' + (current - 1)).classList.add('active');
+      updateProgress(current - 1);
+    }
+
+    function updateProgress(step) {
+      for (var i = 1; i <= 3; i++) {
+        var el = document.getElementById('prog' + i);
+        el.classList.remove('active', 'done');
+        if (i < step) el.classList.add('done');
+        if (i === step) el.classList.add('active');
+      }
+    }
+
+    function showResult(id) {
+      document.getElementById('intakeForm').style.display = 'none';
+      document.querySelector('.progress-bar').style.display = 'none';
+      document.querySelectorAll('.result').forEach(function(r) { r.classList.remove('active'); });
+      document.getElementById(id).classList.add('active');
+
+      if (id === 'result-qualified') {
+        // Load Cal.com embed
+        var cal = document.getElementById('calEmbed');
+        cal.innerHTML = '<iframe src="https://cal.com/malwa-asset-firm/maf-deploy-audit?embed=true" width="100%" height="600" frameborder="0" style="border-radius:8px;"></iframe>';
+      }
+    }
+
+    // Form submission
+    document.getElementById('intakeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Submitting...';
+
+      var data = {
+        company_name: document.getElementById('company_name').value,
+        industry: document.getElementById('industry').value,
+        annual_revenue: document.getElementById('annual_revenue').value,
+        employee_count: parseInt(document.getElementById('employee_count').value) || 0,
+        technician_count: parseInt(document.getElementById('technician_count').value) || 0,
+        owner_involvement: document.getElementById('owner_involvement').value,
+        years_in_business: parseInt(document.getElementById('years_in_business').value) || 0,
+        scheduling_method: document.getElementById('scheduling_method').value,
+        crm_system: document.getElementById('crm_system').value,
+        invoicing_method: document.getElementById('invoicing_method').value,
+        documented_processes: document.getElementById('documented_processes').value,
+        primary_challenge: document.getElementById('primary_challenge').value,
+        owner_admin_hours: document.getElementById('owner_admin_hours').value,
+        review_count: document.getElementById('review_count').value,
+        marketing_spend: document.getElementById('marketing_spend').value,
+        qualified: true
+      };
+
+      // Try Supabase first, fall back gracefully
+      try {
+        var supabaseUrl = 'https://zbjioabligamwmqgtxqs.supabase.co';
+        var supabaseKey = 'sb_publishable_5vsR3xHV2cL8B1YVYTXkKw_XfK7e2p9';
+        var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+        supabase.from('intake_submissions').insert([data]).then(function(res) {
+          if (res.error) {
+            console.error('Supabase error:', res.error);
+            showResult('result-qualified'); // Still show Cal.com even if DB fails
+          } else {
+            showResult('result-qualified');
+          }
+        }).catch(function() {
+          showResult('result-qualified');
+        });
+      } catch (err) {
+        console.error('Submission error:', err);
+        showResult('result-qualified');
+      }
+    });
+
+    function retrySubmit() {
+      document.getElementById('result-error').classList.remove('active');
+      document.getElementById('intakeForm').style.display = 'block';
+      document.querySelector('.progress-bar').style.display = 'flex';
+      document.getElementById('submitBtn').disabled = false;
+      document.getElementById('submitBtn').textContent = 'Submit Application';
+    }
+  </script>
+
+</body>
+</html>
