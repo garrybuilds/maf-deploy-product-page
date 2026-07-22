@@ -19,7 +19,7 @@
   <link rel="dns-prefetch" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;500;600&family=Source+Code+Pro:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23533afd'/><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-family='system-ui' font-size='18' font-weight='600'>M</text></svg>">
-  <script>(function(){var s=localStorage.getItem('theme');if(s)document.documentElement.setAttribute('data-theme',s);})();</script>
+  <script>(function(){var s=localStorage.getItem('theme');if(!s&&window.matchMedia('(prefers-color-scheme:dark)').matches)s='dark';if(s)document.documentElement.setAttribute('data-theme',s);})();</script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -52,8 +52,8 @@
     }
 
     [data-theme="dark"] {
-      --purple: #8b83f7;
-      --purple-hover: #7c6ff7;
+      --purple: #5b4fcf;
+      --purple-hover: #4c41b8;
       --purple-light: #4a3f8a;
       --navy: #e2e8f0;
       --slate: #94a3b8;
@@ -141,6 +141,9 @@
     .btn-primary:hover { background: var(--purple-hover); color: #fff; }
     .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--heading); }
     .btn-outline:hover { border-color: var(--purple); color: var(--purple); }
+    .btn:focus-visible, .faq-question:focus-visible, .theme-toggle:focus-visible, a:focus-visible {
+      outline: 2px solid var(--purple); outline-offset: 2px;
+    }
 
     /* Hero */
     .hero {
@@ -155,6 +158,7 @@
       margin: 0 auto 32px; line-height: 1.6;
     }
     .btn-lg { padding: 16px 40px; font-size: 1.1rem; }
+    .btn-nav { padding: 8px 16px; font-size: 0.9rem; white-space: nowrap; }
     .trust-badges {
       margin-top: 40px; display: flex; justify-content: center; align-items: center;
       gap: 16px; color: rgba(255,255,255,0.62); font-size: 0.9rem; flex-wrap: wrap;
@@ -301,7 +305,7 @@
 
   <nav class="nav">
     <div class="container">
-      <div class="nav-logo">MAF <span>Deploy</span></div>
+      <div class="nav-logo"><a href="/">MAF <span>Deploy</span></a></div>
       <div class="nav-actions">
         <a href="https://cal.com/malwa-asset-firm/maf-deploy-audit?utm_source=deploy&utm_medium=nav&utm_campaign=audit" class="btn btn-primary btn-nav">Get Your Free Audit →</a>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
@@ -438,7 +442,7 @@
           <table class="tier-table">
             <thead>
               <tr>
-                <th scope="col"></th>
+                <th scope="col">Feature</th>
                 <th scope="col" class="tier-header focused">Deploy Focused</th>
                 <th scope="col" class="tier-header scale">Deploy Scale</th>
                 <th scope="col" class="tier-header command">Deploy Command</th>
@@ -525,28 +529,28 @@
         </div>
         <div class="faq-list">
           <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">How is this different from hiring an admin? <span class="faq-icon">+</span></button>
-            <div class="faq-answer"><p>An admin works 40 hours a week and handles one function. Deploy agents work 24/7 and handle entire workflows. Deploy Focused at $2,000/mo costs less than a part-time admin — and you get 3 AI agents instead of one person.</p></div>
+            <button class="faq-question" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); toggleFaq(this); }" aria-expanded="false" aria-controls="faq-answer-1">How is this different from hiring an admin? <span class="faq-icon">+</span></button>
+            <div class="faq-answer" id="faq-answer-1" role="region" aria-labelledby="faq-q-1" aria-hidden="true"><p id="faq-q-1">An admin works 40 hours a week and handles one function. Deploy agents work 24/7 and handle entire workflows. Deploy Focused at $2,000/mo costs less than a part-time admin — and you get 3 AI agents instead of one person.</p></div>
           </div>
           <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">Do I need to switch off my current software? <span class="faq-icon">+</span></button>
-            <div class="faq-answer"><p>No. We build on top of your existing tools. Your ServiceTitan, QuickBooks, CRM — all stay. Our agents sit on top and automate the work between them.</p></div>
+            <button class="faq-question" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); toggleFaq(this); }" aria-expanded="false" aria-controls="faq-answer-2">Do I need to switch off my current software? <span class="faq-icon">+</span></button>
+            <div class="faq-answer" id="faq-answer-2" role="region" aria-labelledby="faq-q-2" aria-hidden="true"><p id="faq-q-2">No. We build on top of your existing tools. Your ServiceTitan, QuickBooks, CRM — all stay. Our agents sit on top and automate the work between them.</p></div>
           </div>
           <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">What if the audit says I don't need MAF Deploy? <span class="faq-icon">+</span></button>
-            <div class="faq-answer"><p>Then we tell you. We might recommend an Implementation Package instead, or we might tell you to come back when you're bigger. We're not going to sell you something that won't help.</p></div>
+            <button class="faq-question" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); toggleFaq(this); }" aria-expanded="false" aria-controls="faq-answer-3">What if the audit says I don't need MAF Deploy? <span class="faq-icon">+</span></button>
+            <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-q-3" aria-hidden="true"><p id="faq-q-3">Then we tell you. We might recommend an Implementation Package instead, or we might tell you to come back when you're bigger. We're not going to sell you something that won't help.</p></div>
           </div>
           <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">How long until I see results? <span class="faq-icon">+</span></button>
-            <div class="faq-answer"><p>The pilot runs 60 days. At day 60, you get a scorecard showing revenue impact, cost savings, and risk mitigation. If the numbers don't justify continuing, we say so.</p></div>
+            <button class="faq-question" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); toggleFaq(this); }" aria-expanded="false" aria-controls="faq-answer-4">How long until I see results? <span class="faq-icon">+</span></button>
+            <div class="faq-answer" id="faq-answer-4" role="region" aria-labelledby="faq-q-4" aria-hidden="true"><p id="faq-q-4">The pilot runs 60 days. At day 60, you get a scorecard showing revenue impact, cost savings, and risk mitigation. If the numbers don't justify continuing, we say so.</p></div>
           </div>
           <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">What if it doesn't work? <span class="faq-icon">+</span></button>
-            <div class="faq-answer"><p>Our guarantee: if we fail 2 months in a row, you walk with a full refund. No penalty. No fight. We put our money where our mouth is.</p></div>
+            <button class="faq-question" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); toggleFaq(this); }" aria-expanded="false" aria-controls="faq-answer-5">What if it doesn't work? <span class="faq-icon">+</span></button>
+            <div class="faq-answer" id="faq-answer-5" role="region" aria-labelledby="faq-q-5" aria-hidden="true"><p id="faq-q-5">Our guarantee: if we fail 2 months in a row, you walk with a full refund. No penalty. No fight. We put our money where our mouth is.</p></div>
           </div>
           <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)" aria-expanded="false">Is this just AI hype? <span class="faq-icon">+</span></button>
-            <div class="faq-answer"><p>The audit is free. If we can't show you measurable impact in 60 days, you don't pay. We're betting our value demonstration works — and we publish our own scorecard every month to prove it.</p></div>
+            <button class="faq-question" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); toggleFaq(this); }" aria-expanded="false" aria-controls="faq-answer-6">Is this just AI hype? <span class="faq-icon">+</span></button>
+            <div class="faq-answer" id="faq-answer-6" role="region" aria-labelledby="faq-q-6" aria-hidden="true"><p id="faq-q-6">The audit is free. If we can't show you measurable impact in 60 days, you don't pay. We're betting our value demonstration works — and we publish our own scorecard every month to prove it.</p></div>
           </div>
         </div>
       </div>
@@ -583,10 +587,12 @@
       // Close all
       document.querySelectorAll('.faq-item').forEach(function(el) { el.classList.remove('open'); });
       document.querySelectorAll('.faq-question').forEach(function(el) { el.setAttribute('aria-expanded', 'false'); });
+      document.querySelectorAll('.faq-answer').forEach(function(el) { el.setAttribute('aria-hidden', 'true'); });
       // Open clicked (unless it was already open)
       if (!isOpen) {
         item.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
+        item.querySelector('.faq-answer').setAttribute('aria-hidden', 'false');
       }
     }
   </script>
