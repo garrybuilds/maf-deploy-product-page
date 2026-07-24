@@ -273,6 +273,18 @@
     .guarantee-card p { font-size: 1rem; line-height: 1.6; margin-bottom: 12px; }
     .guarantee-card .guarantee-sub { font-size: 0.85rem; color: var(--slate); margin-top: 16px; }
 
+    /* Founder */
+    .founder-section { display: flex; align-items: center; gap: 48px; max-width: 880px; margin: 0 auto; }
+    .founder-image { flex-shrink: 0; width: 200px; height: 200px; border-radius: 12px; overflow: hidden; }
+    .founder-image img { width: 100%; height: 100%; object-fit: cover; }
+    .founder-content h3 { font-size: 1.3rem; margin-bottom: 4px; }
+    .founder-content .founder-role { font-size: 0.8rem; color: var(--slate); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; }
+    .founder-content p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 12px; color: var(--text); }
+    @media (max-width: 640px) {
+      .founder-section { flex-direction: column; gap: 24px; text-align: center; }
+      .founder-image { width: 160px; height: 160px; }
+    }
+
     /* FAQ */
     .faq-list { max-width: 640px; margin: 0 auto; }
     .faq-item { border-bottom: 1px solid var(--border); }
@@ -853,6 +865,24 @@
           <div class="faq-item">
             <button class="faq-question" onclick="toggleFaq(this)" onkeydown="if(event.key==='Enter'||event.key===' ') { event.preventDefault(); toggleFaq(this); }" aria-expanded="false" aria-controls="faq-answer-6" id="faq-btn-6">Is this just AI hype? <span class="faq-icon">+</span></button>
             <div class="faq-answer" id="faq-answer-6" role="region" aria-labelledby="faq-btn-6" aria-hidden="true"><p>The audit is free — 24 questions, 10 minutes. If we can't show you measurable impact in 60 days, you don't pay. We publish our own delivery scorecard every month to prove it.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Founder -->
+    <section id="founder">
+      <div class="container">
+        <div class="founder-section reveal">
+          <div class="founder-image">
+            <img src="founder-headshot.png" alt="Garry Mangat, Founder of MAF Deploy">
+          </div>
+          <div class="founder-content">
+            <h3>Garry Mangat</h3>
+            <p class="founder-role">Founder, Malwa Asset Firm</p>
+            <p>I build businesses, systems, and leverage. I started MAF because I kept seeing the same pattern in owner-led service businesses: hard-working operators drowning in back-office work while the actual growth levers sat untouched. They didn't need another consultant with a deck. They needed someone who understands how a business actually runs on the ground — where communication breaks, where decisions stall, where follow-through slips — and who could build systems to fix it.</p>
+            <p>My background is in real-world operations: blue-collar businesses, logistics, large-scale operations at Amazon, and running my own construction company. I'm not interested in tech for its own sake. I care about implementation — better processes, better visibility, better outcomes.</p>
+            <p>If you're running a service business and feel like the back office is eating your time, that's what MAF Deploy solves.</p>
           </div>
         </div>
       </div>
