@@ -20,11 +20,26 @@ CREATE TABLE IF NOT EXISTS public.intake_submissions (
   invoicing_method TEXT NOT NULL,
   documented_processes TEXT NOT NULL,
   primary_challenge TEXT NOT NULL,
+  leaking_workflows TEXT NOT NULL,
+  biggest_bottleneck TEXT,
   owner_admin_hours TEXT NOT NULL,
   review_count TEXT NOT NULL,
   marketing_spend TEXT NOT NULL,
+  urgency TEXT NOT NULL,
+  budget TEXT NOT NULL,
+  constraint_id TEXT,
   qualified BOOLEAN DEFAULT true
 );
+
+-- Idempotent migration for existing installs: apply.html posts these fields
+-- (previously missing from the DDL, so PostgREST rejected every insert —
+-- 100% of Deploy leads were silently dropped).
+ALTER TABLE public.intake_submissions
+  ADD COLUMN IF NOT EXISTS leaking_workflows TEXT,
+  ADD COLUMN IF NOT EXISTS biggest_bottleneck TEXT,
+  ADD COLUMN IF NOT EXISTS urgency TEXT,
+  ADD COLUMN IF NOT EXISTS budget TEXT,
+  ADD COLUMN IF NOT EXISTS constraint_id TEXT;
 
 -- Enable RLS
 ALTER TABLE public.intake_submissions ENABLE ROW LEVEL SECURITY;
