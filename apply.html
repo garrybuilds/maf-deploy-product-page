@@ -481,7 +481,11 @@
 
     function submitForm() {
       if (isSubmitting) return;
-      isSubmitting = true;
+      // NOTE: isSubmitting is deliberately NOT set here. The required-answer
+      // validation below early-returns on missing answers; setting the flag
+      // before it would leave isSubmitting stuck true and every later Submit
+      // click silently swallowed by the guard above (form dead until reload).
+      // The flag is set only after validation passes, just before the fetch.
 
       var q = questions[currentIdx];
       if (q.type === 'select') {
@@ -515,6 +519,8 @@
         answers[q.id] = val;
       }
 
+      // Validation passed — arm the double-submit guard and lock the button.
+      isSubmitting = true;
       var btn = document.getElementById('btnNext');
       btn.disabled = true;
       btn.textContent = 'Submitting...';
