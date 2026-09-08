@@ -245,8 +245,8 @@
       <!-- Result: Error -->
       <div class="result" id="result-error" role="alert">
         <div class="result-icon">⚠️</div>
-        <h2>Something went wrong.</h2>
-        <p>We couldn't submit your application. Please try again or email us directly at <a href="mailto:garry@malwaassetfirm.com">garry@malwaassetfirm.com</a>.</p>
+        <h2>Couldn't save — email garry@malwaassetfirm.com directly</h2>
+        <p>We couldn't submit your application. Nothing was saved, so please reach out to <a href="mailto:garry@malwaassetfirm.com">garry@malwaassetfirm.com</a> directly, or try again.</p>
         <button class="btn btn-primary" onclick="retrySubmit()">Try Again</button>
       </div>
     </div>
@@ -306,6 +306,7 @@
     var answers = {};
     var currentIdx = 0;
     var totalQuestions = questions.length;
+    var isSubmitting = false;
 
     function updateProgress() {
       var pct = Math.round((currentIdx / totalQuestions) * 100);
@@ -470,6 +471,7 @@
     }
 
     function retrySubmit() {
+      isSubmitting = false;
       document.getElementById('result-error').classList.remove('active');
       document.getElementById('formHeader').style.display = '';
       document.getElementById('progressWrap').style.display = '';
@@ -478,6 +480,13 @@
     }
 
     function submitForm() {
+      if (isSubmitting) return;
+      // NOTE: isSubmitting is deliberately NOT set here. The required-answer
+      // validation below early-returns on missing answers; setting the flag
+      // before it would leave isSubmitting stuck true and every later Submit
+      // click silently swallowed by the guard above (form dead until reload).
+      // The flag is set only after validation passes, just before the fetch.
+
       var q = questions[currentIdx];
       if (q.type === 'select') {
         if (!answers[q.id]) {
@@ -510,9 +519,30 @@
         answers[q.id] = val;
       }
 
+      // Validation passed — arm the double-submit guard and lock the button.
+      isSubmitting = true;
       var btn = document.getElementById('btnNext');
       btn.disabled = true;
       btn.textContent = 'Submitting...';
+
+      // Map the primary selected workflow to the 6-vector constraint taxonomy
+      // (Lead response→demand, Scheduling→delivery, Follow-up→conversion,
+      //  CRM & admin→support, Reviews & referrals→retention, Invoicing→cashflow)
+      var CONSTRAINT_MAP = {
+        'Lead response — inquiries sit unanswered': 'demand',
+        'Scheduling — jobs get double-booked or missed': 'delivery',
+        'Follow-up — quotes go out, nobody follows up': 'conversion',
+        'CRM & admin — data entry is a time sink': 'support',
+        'Reviews & referrals — no system to ask or track': 'retention',
+        'Invoicing — slow to send, slower to collect': 'cashflow'
+      };
+      function deriveConstraintId(workflows) {
+        var picks = (workflows || '').split('||').map(function(s) { return s.trim(); }).filter(Boolean);
+        for (var i = 0; i < picks.length; i++) {
+          if (CONSTRAINT_MAP[picks[i]]) return CONSTRAINT_MAP[picks[i]];
+        }
+        return 'demand'; // 'Reporting', 'Other', or empty → demand
+      }
 
       var data = {
         company_name: answers.company_name || '',
@@ -537,13 +567,25 @@
         marketing_spend: answers.marketing_spend || '',
         urgency: answers.urgency || '',
         budget: answers.budget || '',
+        constraint_id: deriveConstraintId(answers.leaking_workflows),
         qualified: true
       };
 
       var statusEl = document.getElementById('submitStatus');
-      statusEl.textContent = 'Submitting your application…';
+      statusEl.textContent = 'Saving your application…';
       statusEl.style.color = 'var(--slate)';
       showResult('result-qualified');
+
+      function showSubmitError(err) {
+        console.error('Submission error:', err);
+        isSubmitting = false;
+        document.getElementById('calEmbed').style.display = 'none';
+        document.getElementById('result-qualified').classList.remove('active');
+        var errStatus = document.getElementById('submitStatus');
+        errStatus.textContent = 'Couldn\'t save — email garry@malwaassetfirm.com directly';
+        errStatus.style.color = 'var(--error)';
+        document.getElementById('result-error').classList.add('active');
+      }
 
       try {
         var supabaseUrl = 'https://zbjioabligamwmqgtxqs.supabase.co';
@@ -551,25 +593,17 @@
         var supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
         supabase.from('intake_submissions').insert([data]).then(function(res) {
           if (res.error) {
-            console.error('Supabase error:', res.error);
-            statusEl.textContent = '⚠ Saved — we\'ll confirm by email';
-            statusEl.style.color = 'var(--slate)';
-          } else {
-            statusEl.textContent = '✓ Application submitted';
-            statusEl.style.color = 'var(--success-text)';
+            showSubmitError(res.error);
+            return;
           }
+          statusEl.textContent = '✓ Application submitted';
+          statusEl.style.color = 'var(--success)';
           showCalEmbed();
         }).catch(function(err) {
-          console.error('Submission error:', err);
-          statusEl.textContent = '⚠ Saved — we\'ll confirm by email';
-          statusEl.style.color = 'var(--slate)';
-          showCalEmbed();
+          showSubmitError(err);
         });
       } catch (err) {
-        console.error('Submission error:', err);
-        statusEl.textContent = '⚠ Saved — we\'ll confirm by email';
-        statusEl.style.color = 'var(--slate)';
-        showCalEmbed();
+        showSubmitError(err);
       }
     }
 
